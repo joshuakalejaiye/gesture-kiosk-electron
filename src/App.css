@@ -24,6 +24,11 @@
   color: white;
 }
 
+.product-img {
+  max-width: 100%;
+  height: auto;
+}
+
 .App-link {
   color: #61dafb;
 }
