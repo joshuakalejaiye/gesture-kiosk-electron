@@ -1,8 +1,9 @@
 /** @jsxImportSource @emotion/react */
-import { jsx, css } from '@emotion/react'
+import { useTheme, css } from '@emotion/react'
 import { Fragment } from 'react';
 import styled from 'styled-components';
 import logo from "../images/Deleted.png"
+
 
 const Logo = styled.img`
 height: 60px;
@@ -12,31 +13,25 @@ margin-bottom: 1vh;
 margin-top: 3vh;
 `
 
-const Background = styled.div`
-  height: 100%; /* Full-height: remove this if you want "auto" height */
-  width: 160px; /* Set the width of the sidebar */
-  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-  z-index: 0; /* Stay on top */
-  top: 0; /* Stay at the top */
-  left: 0;
-  overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 20px;
-  background-color: #111;
-`
-
 const SidebarStyle = styled.div`
-   width: 160px; 
+  margin-top: 35px;
+  width: 160px; 
   position: fixed; 
-  z-index: 1; 
+  z-index: 0; 
   top: 0;
   left: 0;
   height: auto;
   grid-template-columns: 100%;
   grid-row-gap: 2.2vh;
   display:grid; 
+  background-color: #111;
 
   & > div {
     display:grid;
+  }
+
+  ${this}:mask {
+    pointer-events: none;
   }
 
 `
@@ -48,7 +43,7 @@ color: white;
 font-weight: lighter;
 border:none;
 font-size: 2.8vh;
-height: 4vh;
+height: 7.65vh;
 background-color: #111;
 
 ${this}:hover {
@@ -58,6 +53,7 @@ ${this}:hover {
 `
 
 const Sidebar = (props) => {
+    const theme = useTheme();
 
     return (
        <Fragment>
@@ -65,7 +61,7 @@ const Sidebar = (props) => {
           <div css={css` grid-row-start: 1;  grid-row-end:2;  `}>
           <Logo src={logo}></Logo>
           <SidebarButton onClick={(e) => { props.setCategory(''); }}>Home</SidebarButton>
-          <SidebarButton>Coupons</SidebarButton>
+          <SidebarButton>Vouchers</SidebarButton>
           </div>
           
           <div css={css` grid-row-start: 2;  grid-row-end:3; `}>
@@ -75,8 +71,12 @@ const Sidebar = (props) => {
           <SidebarButton onClick={(e) => { props.setCategory('DESSERT'); }}>Dessert</SidebarButton>
           </div>
 
+          <div css={css` grid-row-start: 4;  grid-row-end:4; `}>
+          <SidebarButton>Checkout</SidebarButton>
+          <SidebarButton></SidebarButton>
+          </div>
+
           </SidebarStyle>
-          <Background></Background>
        </Fragment>
     );
 }

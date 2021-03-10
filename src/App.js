@@ -1,11 +1,58 @@
 // this comment tells babel to convert jsx to calls to a function called jsx instead of React.createElement
 /** @jsxImportSource @emotion/react */
-import { jsx, css } from '@emotion/react'
+import { jsx, css, useTheme } from '@emotion/react'
+import styled from 'styled-components';
 import React, { Fragment, useState } from 'react';
 import './App.css';
-import BindProducts from './components/BindProducts';
-import styled from 'styled-components';
-import SidebarStyle from './components/Sidebar';
+import AllProducts from './components/ProductGrid';
+import Sidebar from './components/Sidebar';
+import ObjectDetector from './components/ObjectDetector';
+import HeaderComponent from './components/Header';
+import FooterComponent from './components/Footer';
+import { Router, Switch, Route } from "react-router";
+import { createBrowserHistory } from "history";
+
+// const Routes = () => {
+//   return (
+//     <Router history={history}>
+//       <div className="navbar">
+//         <h6 style={{ display: "inline" }}>Nav Bar</h6>
+//       </div>
+//       <Switch>
+//         <Route path="/admin/login" component={LoginHandler} />
+//         <Route path="/admin/logout" component={LogoutHandler} />
+//         <Route path="*" component={ProtectedHandler} />
+//       </Switch>
+//     </Router>
+//   );
+// };
+
+// const LoginHandler = () => {
+//   return (
+//     <div style={{ marginTop: "1rem" }}>
+//       <form onSubmit={handleSubmit}>
+//         <input
+//           type="email"
+//           placeholder="Enter email address"
+//         />
+//         <input type="submit" value="Login" />
+//       </form>
+//     </div>
+//   );
+// };
+
+// const LogoutHandler = () => {
+//   return <div>Logging out!</div>;
+// };
+
+// const ProtectedHandler = () => {
+//   return (
+//     <div>
+//       <Link to="/logout">Logout here</Link>
+//     </div>
+//   );
+// };
+
 
 const NotInSidebar = styled.section`
 margin-left: 160px; /* Same as the width of the sidebar */
@@ -16,26 +63,21 @@ min-height: 100vh; /* as high as 100% of the page */
 color: #ffffff; */
 `
 const Title = styled.h2`
+font-weight: lighter;
 text-align:center;
 margin-top: 1rem;
+color: whitesmoke;
 `
 const Subtitle = styled(Title)`
 font-size: 1rem;
+margin-top: 0;
 `
-const Footer = styled.footer`
- position: absolute;
- background-color: #111;
- bottom: 0;
- width: 100%;
- height: 2.5rem;
- margin-left: auto; 
- margin-right: auto;
-
- & > a { 
-    display:block;
-    text-align: right;
-    color: #ffffff;
- }
+const Content = styled.section`
+margin-top: 40px;
+display:flex;
+height: 100vh;
+background:#212121;
+align-items: center;
 `
 
 function App() {
@@ -44,26 +86,30 @@ function App() {
 
   return (
     <Fragment>
-      <section css={css`background-color: coral;`}>
-      <SidebarStyle setCategory={setCategory}></SidebarStyle>
-      </section>
-      
-    <NotInSidebar>
-      <header>
-        <Title>Welcome To Our Restaurant</Title>
-        <Subtitle>What would you like to eat?</Subtitle>
-        </header>
+    
+      <HeaderComponent></HeaderComponent>
+    
+      <Sidebar setCategory={setCategory}>
+      </Sidebar>
 
+      <Content>
+     
+      <ObjectDetector></ObjectDetector>
+
+      <NotInSidebar>
+        <header>  
+          <Title>Welcome To Our Restaurant</Title>
+          <Subtitle>What would you like to eat?</Subtitle>
+        </header>
         <section>
           {/* Add routes */}
-          <BindProducts category={category}></BindProducts>
+          <AllProducts category={category}></AllProducts>
         </section>
-    </NotInSidebar>
-    
-    <Footer>
-          <a href="">ADMIN</a>
-        </Footer>
-    </Fragment>  );
+      </NotInSidebar>
+      
+      <FooterComponent></FooterComponent>
+      </Content>
+    </Fragment>);
 }
 
 export default App;

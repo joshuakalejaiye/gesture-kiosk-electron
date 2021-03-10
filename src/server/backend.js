@@ -54,3 +54,17 @@ pg_app.post("/products", async(req, res) => {
     console.log(error.message);
  }
 });
+
+
+pg_app.post("/admin/upload", async(req, res) => {
+   //if context api logged into
+   try {
+     const values = req.body;
+     const addingImage = await pool.query("INSERT INTO product_info (image) VALUES ($1)", 
+     [values.id, values.image]);
+  
+      res.json("Image Added");
+   } catch (error) {
+      console.log(error.message);
+   }
+  });

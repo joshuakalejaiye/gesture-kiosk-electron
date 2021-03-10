@@ -26,8 +26,10 @@ if (require("electron-squirrel-startup")) {
 function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
-    width: 1200,
-    height: 800,
+    width: 1280,
+    height: 720,
+    frame:false,
+    resizable: false,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: true //added security
@@ -80,5 +82,4 @@ app.on("activate", () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
-let server = require('../server/backend');
-
+let server = require('../src/server/backend');
