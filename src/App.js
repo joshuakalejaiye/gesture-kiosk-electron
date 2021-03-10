@@ -2,7 +2,7 @@
 /** @jsxImportSource @emotion/react */
 import { jsx, css, useTheme } from '@emotion/react'
 import styled from 'styled-components';
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import './App.css';
 import AllProducts from './components/ProductGrid';
 import Sidebar from './components/Sidebar';
@@ -11,48 +11,9 @@ import HeaderComponent from './components/Header';
 import FooterComponent from './components/Footer';
 import { Router, Switch, Route } from "react-router";
 import { createBrowserHistory } from "history";
-
-// const Routes = () => {
-//   return (
-//     <Router history={history}>
-//       <div className="navbar">
-//         <h6 style={{ display: "inline" }}>Nav Bar</h6>
-//       </div>
-//       <Switch>
-//         <Route path="/admin/login" component={LoginHandler} />
-//         <Route path="/admin/logout" component={LogoutHandler} />
-//         <Route path="*" component={ProtectedHandler} />
-//       </Switch>
-//     </Router>
-//   );
-// };
-
-// const LoginHandler = () => {
-//   return (
-//     <div style={{ marginTop: "1rem" }}>
-//       <form onSubmit={handleSubmit}>
-//         <input
-//           type="email"
-//           placeholder="Enter email address"
-//         />
-//         <input type="submit" value="Login" />
-//       </form>
-//     </div>
-//   );
-// };
-
-// const LogoutHandler = () => {
-//   return <div>Logging out!</div>;
-// };
-
-// const ProtectedHandler = () => {
-//   return (
-//     <div>
-//       <Link to="/logout">Logout here</Link>
-//     </div>
-//   );
-// };
-
+import {LogoutHandler, ProtectedHandler, LoginHandler } from './handlers'
+import history from './history';
+import SessionContext from './context';
 
 const NotInSidebar = styled.section`
 margin-left: 160px; /* Same as the width of the sidebar */
@@ -83,17 +44,24 @@ align-items: center;
 function App() {
   
   const [category, setCategory] = useState('');
+  const [session, setSession] = useState(SessionContext);
+
+  useEffect(
+    () => {
+      setSession(SessionContext);
+    },
+    [session]
+  );
 
   return (
-    <Fragment>
-    
+    <>
       <HeaderComponent></HeaderComponent>
     
       <Sidebar setCategory={setCategory}>
       </Sidebar>
 
       <Content>
-     
+      
       <ObjectDetector></ObjectDetector>
 
       <NotInSidebar>
@@ -101,15 +69,27 @@ function App() {
           <Title>Welcome To Our Restaurant</Title>
           <Subtitle>What would you like to eat?</Subtitle>
         </header>
+    
         <section>
-          {/* Add routes */}
-          <AllProducts category={category}></AllProducts>
+        <SessionContext.Provider value={session}>
+        <Router history={history}>
+        <Switch>
+        <Route path="/admin/login" component={LoginHandler} />
+        <Route path="/admin/logout" component={LogoutHandler} />
+        {/* //<Route path="*" component={ProtectedHandler} /> */}
+        <Route path="/"> <AllProducts category={category}></AllProducts> </Route>
+        </Switch>
+        </Router>
+        </SessionContext.Provider>
         </section>
+
       </NotInSidebar>
       
-      <FooterComponent></FooterComponent>
+      <FooterComponent>
+      </FooterComponent>
       </Content>
-    </Fragment>);
+      </>
+      );
 }
 
 export default App;

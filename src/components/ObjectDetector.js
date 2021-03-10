@@ -125,6 +125,7 @@ const ObjectDetector = () => {
             bottom: 0,
             textAlign: "center",
             zindex: 2,
+            pointerEvents: "none"
           }}
           videoConstraints={videoConstraints}
         />
@@ -142,6 +143,7 @@ const ObjectDetector = () => {
             zindex: 3,
             width: "100%",
             height: "100%",
+            pointerEvents: "none"
           }}
         />
     </div>

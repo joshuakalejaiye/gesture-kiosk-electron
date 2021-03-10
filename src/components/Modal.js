@@ -56,10 +56,9 @@ const ModalWrapper = styled.div`
 `;
 
 const ModalCard = styled.div`
-  margin-top: ${props => props.headerHeight};
   position: relative;
+  margin-left: 170px;
   min-width: 320px;
-  margin-bottom: 100px;
   z-index: 11;
   background: white;
   border-radius: 5px;

@@ -3,6 +3,7 @@ import { useTheme, css } from '@emotion/react'
 import { Fragment } from 'react';
 import styled from 'styled-components';
 import logo from "../images/Deleted.png"
+import history from '../history';
 
 
 const Logo = styled.img`
@@ -52,6 +53,11 @@ ${this}:hover {
 
 `
 
+const handleAdmin = () => history.push('/admin/login');
+const routeToHome = () =>{
+  if( history.location.pathname !== '/' ) history.push('/');
+} 
+
 const Sidebar = (props) => {
     const theme = useTheme();
 
@@ -59,16 +65,16 @@ const Sidebar = (props) => {
        <Fragment>
           <SidebarStyle>
           <div css={css` grid-row-start: 1;  grid-row-end:2;  `}>
-          <Logo src={logo}></Logo>
-          <SidebarButton onClick={(e) => { props.setCategory(''); }}>Home</SidebarButton>
+          <Logo src={logo} onClick={handleAdmin}></Logo>
+          <SidebarButton onClick={(e) => { props.setCategory(''); routeToHome(); }}>Home</SidebarButton>
           <SidebarButton>Vouchers</SidebarButton>
           </div>
           
           <div css={css` grid-row-start: 2;  grid-row-end:3; `}>
-          <SidebarButton onClick={(e) => { props.setCategory('MAIN'); }}>Main</SidebarButton>
-          <SidebarButton onClick={(e) => { props.setCategory('SIDE')}}>Sides</SidebarButton>
-          <SidebarButton onClick={(e) => { props.setCategory('DRINK'); }}>Drinks</SidebarButton>
-          <SidebarButton onClick={(e) => { props.setCategory('DESSERT'); }}>Dessert</SidebarButton>
+          <SidebarButton onClick={(e) => { props.setCategory('MAIN'); routeToHome(); }}>Main</SidebarButton>
+          <SidebarButton onClick={(e) => { props.setCategory('SIDE'); routeToHome(); }}>Sides</SidebarButton>
+          <SidebarButton onClick={(e) => { props.setCategory('DRINK'); routeToHome(); }}>Drinks</SidebarButton>
+          <SidebarButton onClick={(e) => { props.setCategory('DESSERT'); routeToHome(); }}>Dessert</SidebarButton>
           </div>
 
           <div css={css` grid-row-start: 4;  grid-row-end:4; `}>
