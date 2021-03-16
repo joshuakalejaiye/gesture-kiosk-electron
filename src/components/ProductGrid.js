@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import React, { useState, useEffect } from "react";
 import styled from '@emotion/styled'
-import SingleProduct from './ProductEl';
+import { SingleProduct } from './ProductEl';
 
 const AllProducts = styled.div`
 display:grid;
@@ -10,6 +10,8 @@ grid-row-gap: 1vh;
 padding: 15px;
 grid-column-gap: 1vh;
 overflow-y: scroll;
+scroll-behavior: smooth;
+
 height: 550px;
 position:relative;
 border:none;

@@ -1,8 +1,11 @@
 // this comment tells babel to convert jsx to calls to a function called jsx instead of React.createElement
 /** @jsxImportSource @emotion/react */
-import { jsx, css, useTheme } from '@emotion/react'
 import styled from 'styled-components';
+<<<<<<< Updated upstream
 import React, { Fragment, useState } from 'react';
+=======
+import { useState, useRef } from 'react';
+>>>>>>> Stashed changes
 import './App.css';
 import AllProducts from './components/ProductGrid';
 import Sidebar from './components/Sidebar';
@@ -10,6 +13,7 @@ import ObjectDetector from './components/ObjectDetector';
 import HeaderComponent from './components/Header';
 import FooterComponent from './components/Footer';
 import { Router, Switch, Route } from "react-router";
+<<<<<<< Updated upstream
 import { createBrowserHistory } from "history";
 
 // const Routes = () => {
@@ -53,6 +57,11 @@ import { createBrowserHistory } from "history";
 //   );
 // };
 
+=======
+import { LogoutHandler, LoginHandler, VoucherHandler } from './routeHandlers'
+import history from './history';
+// import SessionContext from './context';
+>>>>>>> Stashed changes
 
 const NotInSidebar = styled.section`
 margin-left: 160px; /* Same as the width of the sidebar */
@@ -83,6 +92,13 @@ align-items: center;
 function App() {
   
   const [category, setCategory] = useState('');
+<<<<<<< Updated upstream
+=======
+
+  console.log("render");
+
+  const productGridRef = useRef(null);
+>>>>>>> Stashed changes
 
   return (
     <Fragment>
@@ -98,16 +114,38 @@ function App() {
 
       <NotInSidebar>
         <header>  
-          <Title>Welcome To Our Restaurant</Title>
-          <Subtitle>What would you like to eat?</Subtitle>
+         
         </header>
         <section>
+<<<<<<< Updated upstream
           {/* Add routes */}
           <AllProducts category={category}></AllProducts>
+=======
+        {/* <SessionContext.Provider value={session}> */}
+        <Router history={history}>
+        <Switch>
+        <Route path="/admin/login" component={LoginHandler} />
+        <Route path="/admin/logout" component={LogoutHandler} />
+        {/* //<Route path="*" component={ProtectedHandler} /> */}
+        <Route path="/voucher" component={VoucherHandler}></Route>
+        <Route path="/"> 
+          <Title>Welcome To Our Restaurant</Title>
+          <Subtitle>What would you like to eat?</Subtitle>
+          <AllProducts ref={productGridRef} category={category}></AllProducts> 
+        </Route>
+        </Switch>
+        </Router>
+        {/* </SessionContext.Provider> */}
+>>>>>>> Stashed changes
         </section>
       </NotInSidebar>
       
+<<<<<<< Updated upstream
       <FooterComponent></FooterComponent>
+=======
+      <FooterComponent productGridRef={productGridRef} >
+      </FooterComponent>
+>>>>>>> Stashed changes
       </Content>
     </Fragment>);
 }

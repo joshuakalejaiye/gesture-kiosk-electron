@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
-import { jsx, css } from '@emotion/react'
+import { jsx, css } from '@emotion/react';
+import styled from 'styled-components';
 import React, { useRef, useState, useEffect } from "react";
 import * as tf from "@tensorflow/tfjs";
 import * as cocossd from "@tensorflow-models/coco-ssd";
 import Webcam from "react-webcam";
-import mouse from '../images/cursor.png';
 
 const videoConstraints = {
   width: 1280,
@@ -12,38 +12,32 @@ const videoConstraints = {
   facingMode: "user"
 };
 
-const ClickOnThing = (x,y) => {
-  console.log("x: " + x);
-  console.log("y: " + y);
-  console.log("bottle detected");
-  var ev = document.createEvent("MouseEvent");
-  var el = document.elementFromPoint(x,y);
-  ev.initMouseEvent(
-      "click",
-      true /* bubble */, true /* cancelable */,
-      window, null,
-      x, y, 0, 0, /* coordinates */
-      false, false, false, false, /* modifier keys */
-      0 /*left*/, null
-  );
-  el.dispatchEvent(ev);
-}
+var x = 0;
+var y = 0;
+
+const Cursor = styled.div`
+  z-index: 1000;
+  height: 10px;
+  width: 10px;
+  border: 2px solid #67daff;
+  border-radius: 50%;
+  position: absolute;
+  pointer-events: none;
+  transition: ease;
+`
 
 const ObjectDetector = () => {
+  const [counting, setCounting] = useState(false);
+  const [clicked, setClicked] = useState(false);
+  const [hovered, setHovered] = useState(null);
+
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
-  const screenScalar = 10;
-
-  // Main function
-  const runCoco = async () => {
-    const net = await cocossd.load();
-    console.log("COCOSSD model loaded.");
-    //  Loop and detect hands
-    setInterval(() => {
-      detect(net);
-    }, 10);
-  };
-
+  const cursorRef = useRef(null);
+  const xScalar = 2.5;
+  const yScalar = 1.7;
+  const yShift = 389.203119516;
+  
   const detect = async (net) => {
     // Check data is available
     if (
@@ -61,54 +55,174 @@ const ObjectDetector = () => {
       webcamRef.current.video.width = videoWidth;
       webcamRef.current.video.height = videoHeight;
 
-      // // Set canvas height and width
-      // canvasRef.current.width = videoWidth;
-      // canvasRef.current.height = videoHeight;
-
       // Make Detections
       const obj = await net.detect(video);
       //console.log(obj);
         
+
       try
       {
-        //if (obj[0]['class'])
-        //{
-          if (obj[0]['class'] === "cell phone" )
+        x = (-1 * (((obj[0]['bbox'][0] + obj[0]['bbox'][2] ) / 2))) + 640;
+        y = obj[0]['bbox'][1] - 200; ///200px higher than the top of the bounding box
+        
+        x = x * xScalar;
+        y = y * yScalar;
+      
+        if (obj[0]['class'] === "cell phone" && obj[0]['score'] > 0.8 )
+        {
+          //dispatch mousemove event
+          cursor.style.transform = `translate(${ x }px, ${ y }px)`;
+          
+          //cursor movement event trigger when the cursor is translated
+          var cursorMoved = new MouseEvent('mousemove', {
+            'view': window,
+            'bubbles': true,
+            'cancelable': true,
+          });
+          
+          cursor.dispatchEvent(cursorMoved);
+
+          var growEvent = new MouseEvent('mouseover', {
+            'view': window,
+            'bubbles': true,
+            'cancelable': true
+          });
+
+          var shrink = new MouseEvent('mouseleave', {
+            'view': window,
+            'bubbles': true,
+            'cancelable': true
+          });
+
+          var element = document.elementFromPoint( document.querySelector('#cursor').getBoundingClientRect().left, document.querySelector('#cursor').getBoundingClientRect().top );
+          if (element.classList.contains('interactable'))
           {
-            const [x, y, _] = obj[0]['bbox'];
-            //console.log("X: " + x + "  Y: " + y);
-            cursor.style.transform = `translate(${ x * 1.2 }px, ${(y * 2) % 720}px)`;
-            //console.log("Translated X value: " + window.screen.availWidth % (x * screenScalar));
-            //console.log("Scaled X value: " + (x * screenScalar));
-            //console.log("Original X value: " + x);
-          }
-          else if (obj[0]['class'] === "bottle" )
+            cursor.dispatchEvent(growEvent);
+          } 
+          else
           {
-            const [x, y, _] = obj[0]['bbox'];
-            console.log(x * screenScalar);
-            ClickOnThing(cursor.offsetLeft, cursor.offsetTop);
+            cursor.dispatchEvent(shrink);
           }
-        //}
+
+
+        }
+        // else
+        // {
+        //   setCounting(false);
+        // }
+
       }
       catch (err)
       {
         console.error(err);
       }
     }
-      
   }
 
-  useEffect(()=>{runCoco()},[]);
+  const ClickElementAtPosition = (x,y) => {
+   
+    console.log( " Cursor Values: " + x + " " + y );
+
+    var cursorClicked = new MouseEvent('click', {
+        'view': window,
+        'bubbles': true,
+        'cancelable': true,
+        'screenX': x,
+        'screenY': y
+    });
+
+    var el = document.elementFromPoint( Math.trunc(x), Math.trunc(y) );
+    el.dispatchEvent(cursorClicked);
+  }
+
+  useEffect( () => {
+    const runCoco = async () => {
+      const net = await cocossd.load();
+      console.log("COCOSSD model loaded.");
+      //  Loop and detect hands
+      setInterval(() => {
+        detect(net);
+      }, 10);
+    };
+
+    runCoco();
+  },[]);
+
+  useEffect( () => {
+    const mouseCursor = document.getElementById('cursor');
+
+    // mouseCursor.addEventListener('mousemove', function() {
+    //   console.log('Cursor event triggered');
+    // });
+    
+    mouseCursor.addEventListener('mouseover', function() {
+      setCounting(true);
+      console.log("mouseover")
+    });
+
+    mouseCursor.addEventListener('mouseleave', () => {
+      setCounting(false);
+      count = 10;
+      console.log("mouseleave")
+    });
+
+    mouseCursor.addEventListener("mouseup", () => {
+      count = 10;
+      setClicked(true);
+    });
+
+    increment();
+  },[counting]);
+
+  const FinishedClicking = (el) => {
+   
+    console.log("finished clicking");
+
+    var mouseUp = new MouseEvent('mouseup', {
+        'view': window,
+        'bubbles': true,
+        'cancelable': true,
+        'screenX': x,
+        'screenY': y
+    });
+
+    el.dispatchEvent(mouseUp);
+  }
+
+
+  //updates 20 times a second, after 30 updates (1.5 seconds) the counter is reset.
+  var count = 10;
+
+  const increment = () => {
+    const mouseCursor = document.getElementById('cursor');
+    x = mouseCursor.getBoundingClientRect().left;
+    y = mouseCursor.getBoundingClientRect().top;
+
+    if (count >= 30 && !clicked)
+    {
+      ClickElementAtPosition(x,y);
+      FinishedClicking(mouseCursor);
+    }
+    
+    if (mouseCursor && mouseCursor.style)
+    {
+      mouseCursor.style.height = String(count) + "px";
+      mouseCursor.style.width = String(count) + "px";
+    }
+
+    if (document.elementFromPoint( Math.trunc(x), Math.trunc(y) ) &&
+        document.elementFromPoint( Math.trunc(x), Math.trunc(y) ).classList.contains('interactable'))
+    {
+      console.log((count += 1));
+    }
+
+    if (counting) setTimeout(increment, 50);
+  }
+  
 
   return (
     <>
-    <img id="cursor" css={css` 
-    z-index: 1000;
-    position: fixed;
-    pointer-events: "none";
-    height: 8vh;
-    width: 8vh;`
-    } src={mouse} alt=""></img>
+    <Cursor id="cursor" className="cursor" ref={cursorRef} alt=""></Cursor>
 
     <div>
         <Webcam

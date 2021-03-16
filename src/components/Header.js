@@ -9,14 +9,14 @@ width: 100%;
 z-index: 1000;
 flex-direction: row-reverse;
 justify-content: flex-start;
-background: #111;
+background: #0e0e0e;
 color: black;
 position: absolute;
 top: 0;
 left: 0;  
 right: 0;
 align-self: stretch;
-z-index:1;
+z-index:3;
 -webkit-app-region: drag;
 `
 

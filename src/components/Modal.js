@@ -26,17 +26,17 @@ const Modal = ({ children, toggle, open, color }) => (
 
  <Portal>    
   {open && (      
-   <ModalWrapper>       
-    <ModalCard css={css` background: ${color}`} onClick={toggle}>          
+   <ModalWrapper>        
+    <ModalCard css={css` background: ${color};`} onClick={toggle}>          
       {children}
     </ModalCard>
-    <Background/>      
+    <Background className="interactable"/>      
    </ModalWrapper >    
   )}  
  </Portal>
 ); 
 
-export default Modal; 
+export { Modal, Portal}; 
 
 Modal.propTypes = {  
  children: PropTypes.PropTypes.object.isRequired,
@@ -77,3 +77,4 @@ const Background = styled.div`
   background: black;
   opacity: 0.5;
 `;
+
