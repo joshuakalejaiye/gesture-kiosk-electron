@@ -3,6 +3,8 @@ import { css } from '@emotion/react'
 import { Fragment } from 'react';
 import styled from 'styled-components';
 import logo from "../images/Deleted.png"
+import history from './history';
+
 
 const Logo = styled.img`
 height: 60px;
@@ -51,8 +53,6 @@ ${this}:hover {
 
 `
 
-<<<<<<< Updated upstream
-=======
 const Background = styled.div`
   position: absolute;
   width: 160px;
@@ -71,25 +71,12 @@ const routeToVoucher = () =>{
   history.push('/voucher');
 } 
 
->>>>>>> Stashed changes
 const Sidebar = (props) => {
 
     return (
        <Fragment>
           <SidebarStyle>
           <div css={css` grid-row-start: 1;  grid-row-end:2;  `}>
-<<<<<<< Updated upstream
-          <Logo src={logo}></Logo>
-          <SidebarButton onClick={(e) => { props.setCategory(''); }}>Home</SidebarButton>
-          <SidebarButton>Vouchers</SidebarButton>
-          </div>
-          
-          <div css={css` grid-row-start: 2;  grid-row-end:3; `}>
-          <SidebarButton onClick={(e) => { props.setCategory('MAIN'); }}>Main</SidebarButton>
-          <SidebarButton onClick={(e) => { props.setCategory('SIDE')}}>Sides</SidebarButton>
-          <SidebarButton onClick={(e) => { props.setCategory('DRINK'); }}>Drinks</SidebarButton>
-          <SidebarButton onClick={(e) => { props.setCategory('DESSERT'); }}>Dessert</SidebarButton>
-=======
           <Logo src={logo} onClick={handleAdmin}></Logo>
           <SidebarButton onClick={() => { props.setCategory(''); routeToHome(); }}>Home</SidebarButton>
           <SidebarButton onClick={() => { routeToVoucher(); }}>Vouchers</SidebarButton>
@@ -100,7 +87,6 @@ const Sidebar = (props) => {
           <SidebarButton onClick={() => { props.setCategory('SIDE'); routeToHome(); }}>Sides</SidebarButton>
           <SidebarButton onClick={() => { props.setCategory('DRINK'); routeToHome(); }}>Drinks</SidebarButton>
           <SidebarButton onClick={() => { props.setCategory('DESSERT'); routeToHome(); }}>Dessert</SidebarButton>
->>>>>>> Stashed changes
           </div>
 
           <div css={css` grid-row-start: 3;  grid-row-end:4; `}>
