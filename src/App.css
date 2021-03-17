@@ -51,9 +51,10 @@
   }
 }
 
+.interactable {
+  cursor: pointer;
+}
 
-.interactable {}
-.cursor {}
 .link-grow {
   transform: scale(2);
   background: white;

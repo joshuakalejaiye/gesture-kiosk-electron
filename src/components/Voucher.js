@@ -1,10 +1,22 @@
 /** @jsxImportSource @emotion/react */
 import { jsx, css } from '@emotion/react'
 //import styled from 'styled-components';
+import KioskContext from "./KioskContext";
+import {useContext , useEffect} from 'react';
 
+const content = 'vouchers';
 const VoucherComponent = () => {
+    const {context, setContext} = useContext(KioskContext);
+    
+    useEffect( () => { 
+        const newContext = context;
+        newContext.content = content;
+        setContext(newContext);
+    } , [])
+
+    
      return (<>
-        <div css={css`display: grid; text-align:center; margin-left: auto; margin-right: auto; background-color: #212121; color: white;`}>
+        <div id={content}  css={css`display: grid; text-align:center; margin-left: auto; margin-right: auto; background-color: #212121; color: white;`}>
             <div>
             <h1 css={css`color: white;`}> Claim a Voucher</h1>
             <h6 css={css`color: white;`}> Enter your code below</h6>

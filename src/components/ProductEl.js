@@ -1,12 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import React, {Fragment, useState, useEffect} from 'react';
-import { jsx, css } from '@emotion/react'
+import { css } from '@emotion/react'
 import food_not_found_image from '../images/food_not_found.jpg';
-import styled from '@emotion/styled'
 import { Modal } from './Modal';
 import { useToggle } from '../hooks/useToggle';
+import styled from 'styled-components';
 
-const ProductDescription = styled.div`
+const ProductDescription = styled.div.attrs(props => ({
+    className: 'interactable'
+  }))`
 padding: 0.4rem;
 vertical-align: top;
 
@@ -14,16 +16,20 @@ vertical-align: top;
     color: white;
 }
 ` 
-const ProductImage = styled.img`
+const ProductImage = styled.img.attrs(props => ({
+    className: 'interactable'
+  }))`
 width: 100%;
 padding: 0.4rem;
-border-radius: 10px;
+border-radius: 2px;
 `
 
-const ProductElement = styled.button`
+const ProductElement = styled.button.attrs(props => ({
+    className: 'interactable'
+  }))`
 display: grid;
 border: none;
-border-radius: 10px;
+border-radius: 2px;
 background-color: #111;
 height: 320px;
 
@@ -41,7 +47,9 @@ ${this}:hover {
 }
 `
 
-const ModalButton = styled.button` 
+const ModalButton = styled.button.attrs(props => ({
+    className: 'interactable'
+  }))` 
 border: 0;
 border-radius: 3px;
 width: 32vh;
@@ -82,9 +90,9 @@ const SingleProduct = ({product}) => {
     const [open, setOpen] = useToggle(false);
 
     return (
-        <ProductElement className="interactable" onClick={() => setOpen(true)}>
+        <ProductElement onClick={() => setOpen(true)}>
         <div>
-        <ProductImage className="interactable" src={food_not_found_image} alt=""></ProductImage>
+        <ProductImage src={food_not_found_image} alt=""></ProductImage>
         </div>
             
         <ProductDescription >

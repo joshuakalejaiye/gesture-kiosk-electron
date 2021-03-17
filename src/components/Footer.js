@@ -1,18 +1,16 @@
 /** @jsxImportSource @emotion/react */
 import styled from 'styled-components';
 import { jsx, css } from '@emotion/react'
+import {useContext} from 'react';
+import KioskContext from './KioskContext';
 
 const Footer = styled.footer`
 position: absolute;
 background-color: #0e0e0e;
 bottom: 0;
 width: 100%;
-height: 2.6rem;
-margin-left: auto; 
-margin-right: auto;
-flex-direction: row-reverse;
-justify-content: flex-start;
-align-self: stretch;
+height: 3rem;
+text-align: center;
 
 & > a { 
    display:block;
@@ -21,11 +19,58 @@ align-self: stretch;
 }
 `
 
-const FooterComponent = ( props ) => {
-document.getElementById('cursor')
+const SidebarButton = styled.button.attrs(props => ({
+    className: 'interactable'
+  }))`
+  text-align: center;
+  display: block;
+  position: absolute;
+  color: white;
+  font-weight: lighter;
+  border:none;
+  margin-top: 3px;
+  font-size: 2.8vh;
+  height: 3rem;
+  width: 20vh;
+  background-color: #0e0e0e;
+`
+
+const UpArrow = styled(SidebarButton)`
+margin-left:25vh;
+margin-bottom: 4px; 
+`
+
+const DownArrow = styled(SidebarButton)`
+margin-right:100vh;
+margin-top: 4px; 
+`
+
+
+// () => {console.log(document.getElementById('all_products')); document.getElementById('all_products').scrollBy(0, 250); 
+
+const FooterComponent = () => {
+    const {context, setContext} = useContext(KioskContext);
+
     return (
-        <Footer className="interactable" onClick={() => {console.log(" footer clicked "); console.log(props); }}>
-            <h5 css={css`z-index: 3; font-weight: lighter; color: white; margin-top: 8px; padding: 0px 710px; margin-left:auto; top:0;`}>&#129155;</h5>
+        <Footer >
+                <span id="footer_content" className="interactable" css={css` display:inline-block; margin-top: 0; margin-bottom: 100px; margin-right:250px;`}>
+            <DownArrow 
+                className="interactable" 
+                onClick={() => { 
+                console.log(context); 
+                if (document.getElementById(context.content)) 
+                    document.getElementById(context.content).scrollBy(0, 250);}}>
+                &#129155;
+            </DownArrow>
+            <UpArrow
+                className="interactable"
+                onClick={() => { 
+                console.log('up arrow');
+                if (document.getElementById(context.content)) 
+                    document.getElementById(context.content).scrollBy(0, -250);}}>
+                &#129153;
+            </UpArrow>
+            </span>
         </Footer>
     );}
 

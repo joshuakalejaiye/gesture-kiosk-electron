@@ -18,6 +18,7 @@ right: 0;
 align-self: stretch;
 z-index:3;
 -webkit-app-region: drag;
+box-shadow: 1px 1px 5px #000000;
 `
 
 const HeaderButton = styled.div`

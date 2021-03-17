@@ -1,5 +1,4 @@
 /** @jsxImportSource @emotion/react */
-import { jsx, css } from '@emotion/react';
 import styled from 'styled-components';
 import React, { useRef, useState, useEffect } from "react";
 import * as tf from "@tensorflow/tfjs";
@@ -29,14 +28,14 @@ const Cursor = styled.div`
 const ObjectDetector = () => {
   const [counting, setCounting] = useState(false);
   const [clicked, setClicked] = useState(false);
-  const [hovered, setHovered] = useState(null);
+  // const [hovered, setHovered] = useState(null);
 
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   const cursorRef = useRef(null);
   const xScalar = 2.5;
   const yScalar = 1.7;
-  const yShift = 389.203119516;
+  //const yShift = 389.203119516;
   
   const detect = async (net) => {
     // Check data is available
@@ -59,7 +58,6 @@ const ObjectDetector = () => {
       const obj = await net.detect(video);
       //console.log(obj);
         
-
       try
       {
         x = (-1 * (((obj[0]['bbox'][0] + obj[0]['bbox'][2] ) / 2))) + 640;
@@ -198,7 +196,7 @@ const ObjectDetector = () => {
     x = mouseCursor.getBoundingClientRect().left;
     y = mouseCursor.getBoundingClientRect().top;
 
-    if (count >= 30 && !clicked)
+    if (count >= 25 && !clicked)
     {
       ClickElementAtPosition(x,y);
       FinishedClicking(mouseCursor);
@@ -222,7 +220,7 @@ const ObjectDetector = () => {
 
   return (
     <>
-    <Cursor id="cursor" className="cursor" ref={cursorRef} alt=""></Cursor>
+    <Cursor id="cursor" ref={cursorRef} alt=""></Cursor>
 
     <div>
         <Webcam
@@ -239,6 +237,7 @@ const ObjectDetector = () => {
             bottom: 0,
             textAlign: "center",
             zindex: 2,
+            pointerEvents: "none"
           }}
           videoConstraints={videoConstraints}
         />
