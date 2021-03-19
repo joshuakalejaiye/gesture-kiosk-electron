@@ -32,7 +32,7 @@ pg_app.get("/products/:category", async(req, res) => {
 });
 
 
-pg_app.get("/products/:id", async(req, res) => {
+pg_app.get("/product/:id", async(req, res) => {
    try {
       const {id} = req.params;
       const singleProduct = await pool.query("SELECT * FROM product_info WHERE product_id=$1",

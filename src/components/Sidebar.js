@@ -51,13 +51,13 @@ height: 8vh;
 left: 0;
 right: 0;
 width: 22vh;
-background-color: #b61827;
+background-color: #212121;
 border-color: #111;
 border-style: solid none solid solid;
 border-width: thin;
 
 ${this}:hover {
-  background-color: #ef5350;
+  background-color: #0277bd;
 }
 
 ${this}:focus {

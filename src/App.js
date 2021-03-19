@@ -56,7 +56,7 @@ function App() {
           },
           {
               "product_id" : "3",
-              "quantity" : "1"
+              "quantity" : "2"
   }]  
 });
 
