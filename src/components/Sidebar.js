@@ -38,7 +38,7 @@ const SidebarStyle = styled.div`
 
 `
 
-const SidebarButton = styled.button.attrs(props => ({
+const SidebarButton = styled(Link).attrs(props => ({
   className: 'interactable'
 }))`
 margin-top: 0.3rem;
@@ -50,18 +50,24 @@ font-size: 2.8vh;
 height: 8vh;
 left: 0;
 right: 0;
+height: 8vh;
 width: 22vh;
 background-color: #212121;
 border-color: #111;
 border-style: solid none solid solid;
 border-width: thin;
+text-decoration: none;
 
 ${this}:hover {
   background-color: #0277bd;
+  text-decoration: none;
+
 }
 
 ${this}:focus {
   background-color: #0277bd;
+  border: none;
+  text-decoration: none;
 }
 `
 
@@ -135,11 +141,9 @@ const Sidebar = (props) => {
           {categories.map(category => (
               category !== categories[0] && <SidebarButton id={category} onClick={() => { handleCategorySwitch(category); }}><SidebarLink to="/">{formatName(category)}</SidebarLink></SidebarButton>
           ))}
+        <SidebarButton className="interactable" ><SidebarLink className="interactable" to="/checkout">Checkout</SidebarLink></SidebarButton>
         </div>
 
-        <div css={css` grid-row-start: 3;  grid-row-end:4; `}>
-        <SidebarButton><SidebarLink to="/checkout">Checkout</SidebarLink></SidebarButton>
-        </div>
         </SidebarStyle>
         <Background/>
       </SidebarContainer>

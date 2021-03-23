@@ -30,19 +30,18 @@ const SidebarButton = styled.button.attrs(props => ({
   border:none;
   margin-top: 3px;
   font-size: 2.8vh;
-  height: 3rem;
-  width: 20vh;
+  height: 4rem;
+  width: 25vh;
   background-color: #0e0e0e;
+  margin-bottom: 1rem;
 `
 
 const UpArrow = styled(SidebarButton)`
 margin-left:25vh;
-margin-bottom: 4px; 
 `
 
 const DownArrow = styled(SidebarButton)`
-margin-right:100vh;
-margin-top: 4px; 
+margin-right:100;
 `
 
 

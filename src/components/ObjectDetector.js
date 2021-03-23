@@ -5,6 +5,8 @@ import * as tf from "@tensorflow/tfjs";
 import * as cocossd from "@tensorflow-models/coco-ssd";
 import Webcam from "react-webcam";
 
+const objectToTrack = "cell phone";
+
 const videoConstraints = {
   width: 1280,
   height: 720,
@@ -66,7 +68,7 @@ const ObjectDetector = () => {
         x = x * xScalar;
         y = y * yScalar;
       
-        if (obj[0]['class'] === "cell phone" && obj[0]['score'] > 0.8 )
+        if (obj[0]['class'] === objectToTrack && obj[0]['score'] > 0.8 )
         {
           //dispatch mousemove event
           cursor.style.transform = `translate(${ x }px, ${ y }px)`;

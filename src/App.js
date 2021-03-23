@@ -5,7 +5,7 @@ import { Fragment, useState, useEffect, useRef } from 'react';
 import './App.css';
 import AllProducts from './components/ProductGrid';
 import Sidebar from './components/Sidebar';
-import ObjectDetector from './components/ObjectDetector';
+import HandDetector from './components/HandDetector';
 import VoucherComponent from './components/Voucher.js';
 import HeaderComponent from './components/Header';
 import FooterComponent from './components/Footer';
@@ -13,6 +13,7 @@ import CheckoutComponent from './components/Checkout';
 import { useHistory } from "react-router-dom";
 import { Route } from "react-router-dom";
 import KioskContext from './components/KioskContext';
+import ThankYou from './components/ThankYou';
 
 const NotInSidebar = styled.section`
 margin-left: 160px; /* Same as the width of the sidebar */
@@ -70,8 +71,8 @@ function App() {
 
       <Content>
      
-      <ObjectDetector></ObjectDetector>
-
+      <HandDetector></HandDetector>      
+      
       <NotInSidebar>
         <header>  
          
@@ -85,8 +86,11 @@ function App() {
          <Route path='/vouchers'>
             <VoucherComponent/>
          </Route>
-         <Route path='/checkout'>
+         <Route exact path='/checkout'>
             <CheckoutComponent/>
+         </Route>
+         <Route path='/checkout/finish'>
+            <ThankYou/>
          </Route>
         </section>
       </NotInSidebar>

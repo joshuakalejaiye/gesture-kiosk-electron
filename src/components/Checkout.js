@@ -7,6 +7,7 @@ import { useToggle } from '../hooks/useToggle';
 import KioskContext from "./KioskContext";
 import CartItem from "./CartItem";
 import { Modal } from './Modal';
+import { Link } from "react-router-dom";
 
 const PageLayout = styled.div`
 display:grid;
@@ -84,6 +85,17 @@ margin-left: auto;
 width: 32vh;
 height: 6vh;
 `
+const SidebarLink = styled(Link).attrs(props => ({
+    className: 'interactable'
+  }))`
+    color: #ffffff;
+    text-decoration: none;
+  
+    ${this}:hover {
+    color: #ffffff;
+    text-decoration: none;
+    }
+`
 
 const content = 'all_products';
 const ProductGrid = () => {    
@@ -152,7 +164,7 @@ const ProductGrid = () => {
                 <Selected product={clickedProduct} setOpen={setOpen}/>
             </Modal>)} */}
             </CartItems>
-            <PurchaseButton>Purchase Items</PurchaseButton>
+            <PurchaseButton><SidebarLink to="/checkout/finish">Purchase Items</SidebarLink></PurchaseButton>
       </PageLayout>
       );
 
