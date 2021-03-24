@@ -46,20 +46,29 @@ function App() {
 
  const [context, setContext] = useState({
   "content" : "all_products",
+  "sidebar_width" : "1900px",
   "sidebar_category" : "",
   "admin_user" : false,
   "admin_email" : "",
   "orientation" : "landscape",
   "cartItems" : [
           {
-              "product_id" : "2",
+              "product_id" : "6",
               "quantity" : "1"
           },
           {
-              "product_id" : "3",
+              "product_id" : "9",
               "quantity" : "2"
   }]  
 });
+
+  useEffect( () => { 
+    //fixed a bug where the home button was selected in the wrong border colour
+    //it was likely being selected before the app.css file was even loaded
+    //after the component renders this unfocuses the active element
+    //it only runs when the program is started
+    document.activeElement.blur();
+  }, [])
 
   return (
     <KioskContext.Provider value={{context, setContext}}>

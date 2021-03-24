@@ -1,12 +1,6 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState, useEffect } from "react";
 import styled from 'styled-components';
-import { jsx, css } from '@emotion/react';
-import {useContext} from 'react';
-import { useToggle } from '../hooks/useToggle';
-import KioskContext from "./KioskContext";
-import CartItem from "./CartItem";
-import { Modal } from './Modal';
+
 
 const PageLayout = styled.div`
 display:grid;
@@ -38,21 +32,8 @@ font-size: 1rem;
 margin-top: 0;
 `
 
-const content = 'all_products';
-const ThankYou = () => {    
-    const {context, setContext} = useContext(KioskContext);
-    var cartItems = [];
-    const [products, setProducts] = useState(cartItems);
-    const [fetched, setFetched] = useState(false);
-    const [open, setOpen] = useToggle(false);
-    const [clickedProduct, setClickedProduct] = useState(null);
-
-   useEffect(() => {
-    const newContext = context;
-    newContext.content = content;
-    setContext(newContext);
-   },[])
-
+const content = 'thank_you';
+const ThankYou = () => { 
 
     return (
       <PageLayout id={content}>

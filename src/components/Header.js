@@ -19,6 +19,20 @@ align-self: stretch;
 z-index:3;
 -webkit-app-region: drag;
 box-shadow: 1px 1px 5px #000000;
+box-sizing: border-box;
+
+& > h5 { 
+  display:block;
+  box-sizing: border-box;
+  z-index: 3;
+  font-weight: lighter;
+  color: white;
+  width:100%;
+  text-align: center;
+  margin-top: 8px;
+  margin-left: 170px;
+}
+
 `
 
 const HeaderButton = styled.div`
@@ -52,9 +66,7 @@ const HeaderComponent = () => {
 
         <>
     <Header>    
-        <CloseButton id="close">x</CloseButton>
-        <MinimiseButton id="min">-</MinimiseButton>
-        <h5 css={css`z-index: 3; font-weight: lighter; color: white; margin-top: 8px; padding: 0px 370px; margin-left:auto; top:0;`}>Gesture Ordering Kiosk</h5>
+        <h5>Gesture Ordering Kiosk</h5>
     </Header>
     </>
 );}

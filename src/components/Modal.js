@@ -27,7 +27,7 @@ const Modal = ({ children, toggle, open, color }) => (
  <Portal>    
   {open && (      
    <ModalWrapper>        
-    <ModalCard css={css` background: ${color};`} onClick={toggle}>          
+    <ModalCard css={css` background: ${color}; min-width:60%;`} onClick={toggle}>          
       {children}
     </ModalCard>
     <Background className="interactable"/>      

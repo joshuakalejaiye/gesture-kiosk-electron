@@ -4,13 +4,21 @@ import { jsx, css } from '@emotion/react'
 import {useContext} from 'react';
 import KioskContext from './KioskContext';
 
-const Footer = styled.footer`
+const Footer = styled.footer.attrs(props => ({
+    className: 'interactable'
+  }))` 
 position: absolute;
 background-color: #0e0e0e;
 bottom: 0;
-width: 100%;
-height: 3rem;
-text-align: center;
+min-width: 100%;
+height: 4rem;
+margin-left: auto;
+margin-right: auto;
+box-sizing: border-box;
+
+& > * { 
+    box-sizing: border-box
+}
 
 & > a { 
    display:block;
@@ -19,29 +27,16 @@ text-align: center;
 }
 `
 
-const SidebarButton = styled.button.attrs(props => ({
+const FooterButton = styled.button.attrs(props => ({
     className: 'interactable'
   }))`
-  text-align: center;
-  display: block;
-  position: absolute;
   color: white;
   font-weight: lighter;
-  border:none;
-  margin-top: 3px;
+  border-color: #111;
   font-size: 2.8vh;
-  height: 4rem;
-  width: 25vh;
   background-color: #0e0e0e;
-  margin-bottom: 1rem;
-`
-
-const UpArrow = styled(SidebarButton)`
-margin-left:25vh;
-`
-
-const DownArrow = styled(SidebarButton)`
-margin-right:100;
+  height: 4rem;
+  width: 50%;
 `
 
 
@@ -52,8 +47,7 @@ const FooterComponent = () => {
 
     return (
         <Footer >
-                <span id="footer_content" className="interactable" css={css` display:inline-block; margin-top: 0; margin-bottom: 100px; margin-right:250px;`}>
-            <DownArrow 
+            {/* <DownArrow 
                 className="interactable" 
                 onClick={() => { 
                 console.log(context); 
@@ -68,8 +62,20 @@ const FooterComponent = () => {
                 if (document.getElementById(context.content)) 
                     document.getElementById(context.content).scrollBy(0, -250);}}>
                 &#129153;
-            </UpArrow>
-            </span>
+            </UpArrow> */}
+
+        <FooterButton className="interactable" onClick={() => { 
+                if (document.getElementById(context.content)) 
+                    document.getElementById(context.content).scrollBy(0, -250);}}>
+            &#129153;
+        </FooterButton>
+        
+        <FooterButton className="interactable" 
+        onClick={() => { 
+            if (document.getElementById(context.content)) 
+                document.getElementById(context.content).scrollBy(0, 250);}}>
+            &#129155;
+        </FooterButton>
         </Footer>
     );}
 

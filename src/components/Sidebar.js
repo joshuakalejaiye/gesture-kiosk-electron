@@ -2,7 +2,6 @@
 import { css } from '@emotion/react'
 import { Fragment } from 'react';
 import styled from 'styled-components';
-import logo from "../images/Deleted.png"
 import { Link } from "react-router-dom";
 import KioskContext from './KioskContext';
 import {useContext, useEffect} from 'react';
@@ -15,6 +14,7 @@ margin-bottom: 1vh;
 margin-top: 3vh;
 `
 
+var sidebar_width = '180px';
 const SidebarStyle = styled.div`
   margin-top: 35px;
   width: 160px; 
@@ -26,7 +26,7 @@ const SidebarStyle = styled.div`
   grid-template-columns: 100%;
   grid-row-gap: 2vh;
   display:grid; 
-  background-color: #111;
+  background-color: #0e0e0e;
 
   & > div {
     display:grid;
@@ -37,31 +37,36 @@ const SidebarStyle = styled.div`
   }
 
 `
+const buttonColor = '#111';
 
 const SidebarButton = styled(Link).attrs(props => ({
   className: 'interactable'
 }))`
-margin-top: 0.3rem;
-text-align: center;
 color: white;
 font-weight: lighter;
 border:none;
 font-size: 2.8vh;
+
+margin-top: auto;
+margin-bottom: auto;
+margin-left: auto;
+margin-right: auto;
+
 height: 8vh;
-left: 0;
-right: 0;
-height: 8vh;
-width: 22vh;
-background-color: #212121;
-border-color: #111;
+width: ${sidebar_width};
+background-color: ${buttonColor};
+
+border-color: ${buttonColor};
 border-style: solid none solid solid;
 border-width: thin;
+
 text-decoration: none;
+text-align: center;
 
 ${this}:hover {
   background-color: #0277bd;
   text-decoration: none;
-
+  color: #ffffff;
 }
 
 ${this}:focus {
@@ -71,31 +76,17 @@ ${this}:focus {
 }
 `
 
-const SidebarLink = styled(Link).attrs(props => ({
-  className: 'interactable'
-}))`
-  color: #ffffff;
-  text-decoration: none;
-
-  ${this}:hover {
-  color: #ffffff;
-  text-decoration: none;
-  }
-
-`
-
 const Background = styled.div`
   position: absolute;
-  width: 160px;
+  width: ${sidebar_width};
   height: 100%;
   z-index: 0;
   top: 0;
   left: 0;
-  background: #111;
+  background: #0e0e0e;
 `;
 
 const SidebarContainer = styled.ul.attrs(props => ({
-  className: 'interactable'
 }))``
 
 const categories = ['_', 'MAIN', 'SIDE', 'DRINK', 'DESSERT'];
@@ -108,6 +99,7 @@ const Sidebar = (props) => {
     newContext.sidebar_category = category;
     setContext(newContext);
     props.setCategory(category);
+    sidebar_width = context.sidebar_width;
 
     if (category === '')
     {
@@ -131,17 +123,17 @@ const Sidebar = (props) => {
       <Fragment>
       <SidebarContainer>
         <SidebarStyle>
-        <div css={css` grid-row-start: 1;  grid-row-end:2;  `}>
-        <Logo src={logo}></Logo>
-        <SidebarButton id={categories[0]} onClick={() => { handleCategorySwitch(''); }}><SidebarLink to="/">Home</SidebarLink></SidebarButton>
-        <SidebarButton><SidebarLink to="/vouchers">Vouchers</SidebarLink></SidebarButton>
+        <div css={css`grid-row-gap: 0.4vh; grid-row-start: 1;  grid-row-end:2;  `}>
+        <Logo src='assets/images/Deleted.png'></Logo>
+        <SidebarButton id={categories[0]} onClick={() => { handleCategorySwitch(''); }} to="/" >Home</SidebarButton>
+        <SidebarButton to="/vouchers">Vouchers</SidebarButton>
         </div>
         
-        <div css={css` grid-row-start: 2;  grid-row-end:3; `}>
+        <div css={css`   grid-row-gap: 0.5vh; grid-row-start: 2;  grid-row-end:3; `}>
           {categories.map(category => (
-              category !== categories[0] && <SidebarButton id={category} onClick={() => { handleCategorySwitch(category); }}><SidebarLink to="/">{formatName(category)}</SidebarLink></SidebarButton>
+              category !== categories[0] && <SidebarButton to="/" key={category} id={category} onClick={() => { handleCategorySwitch(category); }}>{formatName(category)}</SidebarButton>
           ))}
-        <SidebarButton className="interactable" ><SidebarLink className="interactable" to="/checkout">Checkout</SidebarLink></SidebarButton>
+        <SidebarButton className="iteractable" to="/checkout" >Checkout</SidebarButton>
         </div>
 
         </SidebarStyle>

@@ -1,10 +1,12 @@
 /** @jsxImportSource @emotion/react */
-import React, {Fragment, useState, useEffect} from 'react';
+import React, {Fragment, useRef, useState, useEffect} from 'react';
 import { css } from '@emotion/react'
-import food_not_found_image from '../images/food_not_found.jpg';
+// import blueCheeseDip from '../images/Blue Cheese Dip.jpg';
 import { Modal } from './Modal';
 import { useToggle } from '../hooks/useToggle';
 import styled from 'styled-components';
+import {useContext} from 'react';
+import KioskContext from "./KioskContext";
 
 const ProductDescription = styled.div.attrs(props => ({
     className: 'interactable'
@@ -19,9 +21,12 @@ vertical-align: top;
 const ProductImage = styled.img.attrs(props => ({
     className: 'interactable'
   }))`
-width: 100%;
 padding: 0.4rem;
 border-radius: 2px;
+overflow: hidden;
+object-fit: cover;
+width:100%;
+height:200px;
 `
 
 const ProductElement = styled.button.attrs(props => ({
@@ -43,7 +48,7 @@ ${this}:active {
 }
 
 ${this}:hover {
-    box-shadow: 0 0 0 1pt #67daff;
+    box-shadow: 0 0 0 1pt #ffffff;
 }
 `
 
@@ -86,47 +91,110 @@ const AddToCartButton = styled(ModalButton)`
     font-weight: lighter;
 `
 
+const NumberInCart = styled.p`
+    margin-top: 1vh;
+    font-size: 10px;
+    color: white;
+    font-size: 20px;
+    font-weight: lighter;
+`
+
 const SingleProduct = ({product}) => {
     const [open, setOpen] = useToggle(false);
 
+    useEffect(() => {       
+        // const srcImg = '../images/Blue Cheese Dip.jpg';
+        //document.getElementById(product.name).innerHTML = '<img src="' + srcImg +'" id="' + product.name +'"/>';
+        
+    },[]);
+
+
     return (
         <ProductElement onClick={() => setOpen(true)}>
-        <div>
-        <ProductImage src={food_not_found_image} alt=""></ProductImage>
-        </div>
-            
-        <ProductDescription >
-        <h4 css={css`font-weight: lighter; top:0;`}> {product.name} </h4>
-        <h6 css={css`font-weight: lighter; `}> {"£" + product.price} </h6>
-        <p  css={css`font-size:2vh;`}> {product.description} </p>
-        </ProductDescription>
-        {open && (  
-        <Modal toggle={setOpen} open={open} on={false} color={'#212121'}>
-            <Selected product={product} setOpen={setOpen}/>
-        </Modal>)}
-         </ProductElement>
+
+            <div>
+            <ProductImage id={product.name} src={'assets/images/' + product.name + '.jpg'} alt="Image not found"></ProductImage>
+            </div>
+                
+            <ProductDescription >
+            <h4 css={css`font-weight: lighter; top:0;`}> {product.name} </h4>
+            <h6 css={css`font-weight: lighter; `}> {"£" + product.price} </h6>
+            <p  css={css`font-size:1.8vh;`}> {product.description} </p>
+            </ProductDescription>
+
+            {open && (  
+            <Modal toggle={setOpen} open={open} on={false} color={'#212121'}>
+                <Selected product={product} setOpen={setOpen}/>
+            </Modal>)}
+
+        </ProductElement>
 
     );
 } 
 
-const Selected = ({product, setOpen}) => {
 
-    const [count, setCount] = useState(0);
+const Selected = ({product, setOpen}) => {
+    const {context, setContext} = useContext(KioskContext);
+    const isInCart = useRef(false);
+    const positionInCart = useRef(0);
+    const quantityInCart = useRef(0);
+    
+    for (var i = 0; i < context.cartItems.length; i++) {
+        if (String(context.cartItems[i].product_id) === String(product.product_id)) isInCart.current = true;
+        
+        if (isInCart.current) 
+        {
+            positionInCart.current = i;
+            quantityInCart.current = context.cartItems[i].quantity;
+            break;
+        }
+    }
+     
+
+    const AddToCart = (product_id, amount_to_add) => {
+        const newContext = context;
+
+        if (isInCart.current)
+        {
+            console.log("old quantity: " + newContext.cartItems[positionInCart.current].quantity);
+            newContext.cartItems[positionInCart.current].quantity = String(Number(newContext.cartItems[positionInCart.current].quantity) + Number(amount_to_add));
+            console.log("new quantity: " + newContext.cartItems[positionInCart.current].quantity);
+        }
+        else
+        {
+            newContext.cartItems.push({
+                "product_id" : String(product_id),
+                "quantity" : String(amount_to_add)
+            })
+
+            console.log(newContext.cartItems);
+        }
+        
+        setContext(newContext);
+        console.log(context);
+    }
+    
+    const [count, setCount] = useState(1);
 
     useEffect( () => {
         console.log(count);
     }, [count]);
 
+    const currentQuantity = () => {
+        return context.cartItems[positionInCart.current].quantity ? context.cartItems[positionInCart.current].quantity : 0;
+    }
+
     return (
         <Fragment>
-        <div css={  css`border-radius: 15px; background: #212121; width: 100%; display:grid; margin-left: auto; margin-right: auto; margin-bottom:80px; margin-top:80px; text-align: center;`} >
-        <ProductImage css={css`border-radius: 15px; width: 64%; display:block; margin-left: auto; margin-right: auto;`} src={food_not_found_image} alt=""></ProductImage>
+        <div css={  css`border-radius: 15px; background: #212121; width: 90%; display:grid; margin-left: auto; margin-right: auto; margin-bottom:80px; margin-top:80px; text-align: center;`} >
+        <ProductImage css={css`border-radius: 15px; height:400px;  display:block; margin-left: auto; margin-right: auto;`} src={'assets/images/' + product.name + '.jpg'} alt="Image was missing"></ProductImage>
         <span>
-            <RemoveButton className="interactable" onClick={  () => { if (count > 0) setCount( count - 1)}}>-</RemoveButton>
+            <RemoveButton className="interactable" onClick={  () => { if (count > 1) setCount( count - 1)}}>-</RemoveButton>
             <AddButton className="interactable" onClick={  () => { setCount( count + 1)}}>+</AddButton>
         </span>
         <div>
-        <AddToCartButton className="interactable" onClick={() => { setOpen(false);}}>Add {product.name} { count ? ("(" + count + ")") : " "} To Cart</AddToCartButton>
+        <AddToCartButton className="interactable" onClick={() => {  AddToCart(product.product_id, count); setOpen(false);}}>Add {product.name} { count ? ("(" + count + ")") : " "} To Cart</AddToCartButton>
+        <NumberInCart className="interactable"> Number in Cart: {currentQuantity()} </NumberInCart>
         </div>
         </div>
         </Fragment>

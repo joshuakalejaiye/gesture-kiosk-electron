@@ -2,7 +2,7 @@ CREATE DATABASE kiosk_db;
 
 CREATE TABLE product_info(
     product_id SERIAL PRIMARY KEY,
-    name VARCHAR(30) NOT NULL,
+    name VARCHAR(30) NOT NULL UNIQUE,
     price DECIMAL(12,2) NOT NULL,
     description VARCHAR(255),
     category VARCHAR(255)
@@ -21,4 +21,4 @@ CREATE TABLE product_info(
 -- -- INSERT INTO product_info (name, price, description, category) VALUES ( '7 Chicken Wings', 7.99, 'Great tasting chicken wings.', 'SIDE' );
 
 -- -- INSERT INTO product_info (name, price, description, category) VALUES ( 'Fantasta', 4.99, 'A zesty orange flavoured soft drink', 'DRINK' );
--- -- INSERT INTO product_info (name, price, description, category) VALUES ( 'Cola', 4.99, '  ', 'DRINK' );
+-- -- INSERT INTO product_info (name, price, description, category) VALUES ( 'Cola', 4.99, ' A nutty classic cola ', 'DRINK' );

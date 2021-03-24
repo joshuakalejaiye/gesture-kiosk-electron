@@ -11,9 +11,9 @@ grid-template-columns: 1fr 1fr 1fr;
 grid-row-gap: 1vh;
 padding: 15px;
 grid-column-gap: 1vh;
-overflow-y: scroll;
+overflow-y: auto;
 scroll-behavior: smooth;
-height: 550px;
+height: 80vh;
 position:relative;
 border:none;
 box-shadow: none;
@@ -26,6 +26,8 @@ const ProductGrid = (props) => {
     const [products, setProducts] = useState([]);
 
     useEffect( () => {
+        let receivedProducts = true;
+
         async function fetchData() {
             try {
                 const response = await fetch (`http://localhost:5000/products/${props.category}`);
@@ -39,6 +41,9 @@ const ProductGrid = (props) => {
         }
         fetchData();
         console.log(context.sidebar_category);
+
+        //this prevents a memory leak in the event that the user changes categories before all products are received
+        return () => (receivedProducts = false)
     },[props])
     
     useEffect ( () => {

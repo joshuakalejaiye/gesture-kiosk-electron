@@ -31,7 +31,7 @@ const HandtrackComponent = () => {
     const sizeRef = useRef(initialCursorSize);
     const handPresentRef = useRef(false);
     const [elementIsInteractable, setElement] = useState(true);
-    const cursorFrameIncrement = 0.5;
+    const cursorFrameIncrement = 1;
     const cursorMaxSize = 52;
 
     //called after every element is rendered and can be referred to
@@ -68,16 +68,16 @@ const HandtrackComponent = () => {
            const handPresent = predictions.length > 0;
            handPresentRef.current = handPresent;
 
-           if (predictions.length === 1 && handPresent && predictions[0]["score"] > 0.8)
+           if ( handPresent && predictions[0]["score"] > 0.71)
            {
             //x and y values received from model are transformed to allow the cursor to reach all parts of the program
             //these can be finetuned further and would have to be adjusted for different screen sizes
             const xScalar = 3.2;
-            const yScalar = 2.5;
+            const yScalar = 2.2;
 
             //get coordinates from the model
             const x = predictions[0]["bbox"][0] * xScalar;
-            const y = (predictions[0]["bbox"][1] * yScalar) - 400;
+            const y = (predictions[0]["bbox"][1] * yScalar) - 200;
 
             //set the cursor to the appropriate positions
             cursorRef.current.style.transform = `translate(${ x }px, ${ y }px)`;
@@ -128,7 +128,7 @@ const HandtrackComponent = () => {
         //if there is a clickable element below the cursor and the user's hand is being detected
         //the cursor will grow in size by .5px every frame.
         //at a preset maximum size 
-        if ( document.elementFromPoint( 
+        if ( cursorRef.current && document.elementFromPoint( 
                 cursorRef.current.getBoundingClientRect().left,
                 cursorRef.current.getBoundingClientRect().top) && 
             document.elementFromPoint( 
@@ -155,7 +155,6 @@ const HandtrackComponent = () => {
         } 
         
         // console.log("button is clickable: " + buttonIsInteractable + " , hand is present: " + handPresentRef.current);
-        requestAnimationFrame(DwellControls);
     }
 
     useEffect(() => {
@@ -165,8 +164,8 @@ const HandtrackComponent = () => {
         });
 
         AfterRender();
-        // setInterval(DwellControls, 50);
-        DwellControls();
+        setInterval(DwellControls, 50);
+        
     }, []);
 
     useEffect( () => {
@@ -176,7 +175,7 @@ const HandtrackComponent = () => {
         {
           console.log('size reset');
           sizeRef.current = initialCursorSize;
-          
+
           cursorRef.current.style.height = String(sizeRef.current) + "px";
           cursorRef.current.style.width = String(sizeRef.current) + "px";
         }
@@ -187,9 +186,9 @@ const HandtrackComponent = () => {
             <div id="cursor" 
             style={{
                 zIndex: '1000',
-                height: '10px',
-                width: '10px',
-                border: '2px solid #ffffff',
+                height: '12px',
+                width: '12px',
+                border: '2px solid #67daff',
                 borderRadius: '50%',
                 position: 'absolute',
                 pointerEvents: 'none',
@@ -203,7 +202,7 @@ const HandtrackComponent = () => {
                 zIndex: '999',
                 height: 100,
                 width: 100,
-                marginBottom: '2.5rem',
+                marginBottom: '3.2rem',
                 marginLeft: '1.8rem',
                 bottom: 0,
                 left: 0,

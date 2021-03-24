@@ -13,13 +13,13 @@ const PageLayout = styled.div`
 display:grid;
 grid-template-columns: 1fr;
 grid-row-gap: 1vh;
-width:1100px;
+min-width:85vw;
 padding: 15px;
 grid-column-gap: 1vh;
 overflow-y: scroll;
 margin-top: 2vh;
 scroll-behavior: smooth;
-height: 550px;
+height: 80vh;
 position:relative;
 border:none;
 box-shadow: none;
@@ -36,12 +36,12 @@ font-size: 1rem;
 margin-top: 0;
 `
 
-const CartItems = styled.div`
+const CartGrid = styled.div`
 display:grid;
 grid-template-columns: 1fr;
 grid-row-gap: 0vh;
 padding: 15px;
-grid-column-gap: 1vh;
+grid-column-gap: 4vh;
 height: 550px;
 position:relative;
 border:none;
@@ -97,14 +97,13 @@ const SidebarLink = styled(Link).attrs(props => ({
     }
 `
 
-const content = 'all_products';
+const content = 'checkout';
 const ProductGrid = () => {    
     const {context, setContext} = useContext(KioskContext);
     var cartItems = [];
     const [products, setProducts] = useState(cartItems);
     const [fetched, setFetched] = useState(false);
     const [open, setOpen] = useToggle(false);
-    const [clickedProduct, setClickedProduct] = useState(null);
 
    useEffect(() => {
     const newContext = context;
@@ -128,7 +127,7 @@ const ProductGrid = () => {
     }
 
     createLocalCartItems().then(setProducts(cartItems));
-   },[])
+   },[context])
 
     
     const fetchProduct = async (product) => {
@@ -142,29 +141,23 @@ const ProductGrid = () => {
         }
     }
 
-    const changeQuantity = (product, NewQuantity) => {
-        
-    } 
-
     return (
       <PageLayout id={content}>
           <Title>Checkout</Title>
-
-       
-            <Subtitle> { products && 'You have ' + products.length + ' items in your cart.' }</Subtitle>
-            <CartItems css={css``}>
+            <Subtitle> { products.length === 0 && 'You have no items in your cart.' }</Subtitle>
+            <CartGrid css={css``}>
             {products.map(product => (
                     <>
-                <CartItem key={product.product_id} product={product} changeQuantity={changeQuantity}>
-                </CartItem>
-                <DeleteButton onClick={() => { setOpen(true); setClickedProduct(product)}}>Edit Quantity</DeleteButton> </>  
+                <CartItem key={product.product_id} id={product.product_id} product={product}>
+                </CartItem>  </>
             ))}
             {/* {open && (  
             <Modal toggle={setOpen} open={open} on={false} color={'#212121'}>
                 <Selected product={clickedProduct} setOpen={setOpen}/>
             </Modal>)} */}
-            </CartItems>
             <PurchaseButton><SidebarLink to="/checkout/finish">Purchase Items</SidebarLink></PurchaseButton>
+            </CartGrid>
+         
       </PageLayout>
       );
 
