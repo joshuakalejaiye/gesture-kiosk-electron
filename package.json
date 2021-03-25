@@ -81,19 +81,16 @@
     "forge": {
       "packagerConfig": {
         "icon": "src/icons/mac/icon.icns",
-        "name": "G-Kiosk"
+        "name": "G-Kiosk",
+        "asar": true
       },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "gesture_kiosk_electron",
-            "forge": {
-              "packagerConfig": {
-                "asar": true
-              }
+            "name": "gesture_kiosk_electron"
           }
-        }},
+        },
         {
           "name": "@electron-forge/maker-zip",
           "platforms": [
