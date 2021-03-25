@@ -89,7 +89,7 @@ const Background = styled.div`
 const SidebarContainer = styled.ul.attrs(props => ({
 }))``
 
-const categories = ['_', 'MAIN', 'SIDE', 'DRINK', 'DESSERT'];
+const categories = ['_', 'MAIN', 'SIDE', 'DESSERT', 'DRINK'];
 
 const Sidebar = (props) => {
   const {context, setContext} = useContext(KioskContext);

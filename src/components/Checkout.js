@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import styled from 'styled-components';
 import { jsx, css } from '@emotion/react';
-import {useContext} from 'react';
+import {useContext, useRef} from 'react';
 import { useToggle } from '../hooks/useToggle';
 import KioskContext from "./KioskContext";
 import CartItem from "./CartItem";
@@ -16,10 +16,10 @@ grid-row-gap: 1vh;
 min-width:85vw;
 padding: 15px;
 grid-column-gap: 1vh;
-overflow-y: scroll;
+overflow-y: auto;
 margin-top: 2vh;
 scroll-behavior: smooth;
-height: 80vh;
+min-height: 60vh;
 position:relative;
 border:none;
 box-shadow: none;
@@ -28,7 +28,6 @@ box-shadow: none;
 const Title = styled.h2`
 font-weight: lighter;
 text-align:center;
-margin-top: 1rem;
 color: whitesmoke;
 `
 const Subtitle = styled(Title)`
@@ -73,18 +72,9 @@ font-size: 20px;
 font-weight: lighter;
 margin-left:auto;
 margin-right:auto;
+z-index: 0;
 `
 
-const DeleteButton = styled(Button)`
-background-color: #738ADB;
-font-weight: lighter;
-font-size: 22px;
-margin-top: -100px;
-margin-right: 220px;
-margin-left: auto;
-width: 32vh;
-height: 6vh;
-`
 const SidebarLink = styled(Link).attrs(props => ({
     className: 'interactable'
   }))`
@@ -103,7 +93,12 @@ const ProductGrid = () => {
     var cartItems = [];
     const [products, setProducts] = useState(cartItems);
     const [fetched, setFetched] = useState(false);
-    const [open, setOpen] = useToggle(false);
+    const cartGridRef = useRef(false);
+    const subtitleRef = useRef(false);
+    const purchaseLinkRef = useRef(false);
+    const cartEmptyMessage = 'Your cart is empty';
+    const [subtitleVal, setSubtitleVal] = useState('');
+
 
    useEffect(() => {
     const newContext = context;
@@ -124,12 +119,29 @@ const ProductGrid = () => {
 
         console.log(cartItems);
         setFetched(true);
+        HandleCartSize();
     }
 
     createLocalCartItems().then(setProducts(cartItems));
-   },[context])
 
+    document.addEventListener("click", () => { 
+        HandleCartSize();
+    } );
+    },[])
     
+
+    const HandleCartSize = () => {
+        if (cartGridRef.current && purchaseLinkRef.current && 
+            cartGridRef.current.getElementsByTagName('div').length < 2)
+        {
+            setSubtitleVal(cartGridRef.current.getElementsByTagName('div').length < 2 ? cartEmptyMessage : '');
+            purchaseLinkRef.current.classList.add("invisible");
+            
+            subtitleRef.current.style.fontSize= "large";
+        }            
+
+    }
+
     const fetchProduct = async (product) => {
         try 
         {
@@ -141,24 +153,28 @@ const ProductGrid = () => {
         }
     }
 
+    // useEffect( HandleCartSize, [cartGridRef.current && cartGridRef.current.getElementsByTagName('div').length]);
+
     return (
+        <>
       <PageLayout id={content}>
           <Title>Checkout</Title>
-            <Subtitle> { products.length === 0 && 'You have no items in your cart.' }</Subtitle>
-            <CartGrid css={css``}>
+            <Subtitle ref={subtitleRef}> { subtitleVal }</Subtitle>
+            <CartGrid ref={cartGridRef}>
             {products.map(product => (
                     <>
                 <CartItem key={product.product_id} id={product.product_id} product={product}>
-                </CartItem>  </>
+                </CartItem>  </> 
             ))}
             {/* {open && (  
             <Modal toggle={setOpen} open={open} on={false} color={'#212121'}>
                 <Selected product={clickedProduct} setOpen={setOpen}/>
             </Modal>)} */}
-            <PurchaseButton><SidebarLink to="/checkout/finish">Purchase Items</SidebarLink></PurchaseButton>
+            <PurchaseButton ref={purchaseLinkRef} ><SidebarLink to="/checkout/finish">Purchase Items</SidebarLink></PurchaseButton>
             </CartGrid>
          
       </PageLayout>
+      </>
       );
 
 };

@@ -36,7 +36,8 @@ display: grid;
 border: none;
 border-radius: 2px;
 background-color: #111;
-height: 320px;
+min-height: 320px;
+max-height: 400px;
 
 //fixes a strange clipping issue with the box shadows
 margin-top: 1rem;
@@ -181,7 +182,7 @@ const Selected = ({product, setOpen}) => {
     }, [count]);
 
     const currentQuantity = () => {
-        return context.cartItems[positionInCart.current].quantity ? context.cartItems[positionInCart.current].quantity : 0;
+        return isInCart.current ? context.cartItems[positionInCart.current].quantity : 0;
     }
 
     return (

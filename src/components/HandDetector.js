@@ -73,7 +73,7 @@ const HandtrackComponent = () => {
             //x and y values received from model are transformed to allow the cursor to reach all parts of the program
             //these can be finetuned further and would have to be adjusted for different screen sizes
             const xScalar = 3.2;
-            const yScalar = 2.2;
+            const yScalar = 2.7;
 
             //get coordinates from the model
             const x = predictions[0]["bbox"][0] * xScalar;

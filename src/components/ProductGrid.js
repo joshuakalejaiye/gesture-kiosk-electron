@@ -13,7 +13,7 @@ padding: 15px;
 grid-column-gap: 1vh;
 overflow-y: auto;
 scroll-behavior: smooth;
-height: 80vh;
+height: 76vh;
 position:relative;
 border:none;
 box-shadow: none;

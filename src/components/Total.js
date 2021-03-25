@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import styled from 'styled-components';
-
+import KioskContext from "./KioskContext";
 
 const PageLayout = styled.div`
 display:grid;
@@ -25,11 +25,11 @@ margin-top: auto;
 margin-bottom: auto;
 margin-left: auto;
 margin-right: auto;
-
 `
 
 const content = 'thank_you';
-const ThankYou = () => { 
+const Total = () => { 
+    const {context, setContext} = useContext(KioskContext);
 
     return (
       <PageLayout id={content}>
@@ -39,4 +39,4 @@ const ThankYou = () => {
 
 };
 
-export default ThankYou;
+export default Total;

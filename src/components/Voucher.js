@@ -31,7 +31,6 @@ font-size: 1rem;
 margin-top: 0;
 `
 
-
 const content = 'vouchers';
 const VoucherComponent = () => {
     const {context, setContext} = useContext(KioskContext);

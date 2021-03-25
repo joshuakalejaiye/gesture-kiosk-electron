@@ -87,9 +87,13 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "gesture_kiosk_electron"
+            "name": "gesture_kiosk_electron",
+            "forge": {
+              "packagerConfig": {
+                "asar": true
+              }
           }
-        },
+        }},
         {
           "name": "@electron-forge/maker-zip",
           "platforms": [
