@@ -81,7 +81,6 @@ const AddButton = styled(ModalButton)`
 const RemoveButton = styled(ModalButton)`
     background-color: #c4001d;
     margin-right: 5vh;
-
 `   
 
 const AddToCartButton = styled(ModalButton)`
