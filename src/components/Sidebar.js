@@ -4,7 +4,7 @@ import { Fragment } from 'react';
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
 import KioskContext from './KioskContext';
-import {useContext, useEffect} from 'react';
+import {useContext, useEffect, useState} from 'react';
 
 const Logo = styled.img`
 height: 60px;
@@ -90,10 +90,12 @@ const SidebarContainer = styled.ul.attrs(props => ({
 }))``
 
 const categories = ['_', 'MAIN', 'SIDE', 'DESSERT', 'DRINK'];
+const images = require.context('../images', true);
 
 const Sidebar = (props) => {
   const {context, setContext} = useContext(KioskContext);
-  
+  const [itemsInCart, setItemsInCart] = useState(0);
+
   const handleCategorySwitch = ( category ) => {
     const newContext = context;
     newContext.sidebar_category = category;
@@ -115,6 +117,7 @@ const Sidebar = (props) => {
     handleCategorySwitch('');
   }, []);
 
+
   const formatName = name => {
     return (name.charAt(0).toUpperCase() + name.slice(1).toLowerCase() + "s");
   }
@@ -124,7 +127,7 @@ const Sidebar = (props) => {
       <SidebarContainer>
         <SidebarStyle>
         <div css={css`grid-row-gap: 0.4vh; grid-row-start: 1;  grid-row-end:2;  `}>
-        <Logo src='assets/images/Deleted.png'></Logo>
+        <Logo src={`${process.env.PUBLIC_URL}/assets/images/logo.png`}></Logo>
         <SidebarButton id={categories[0]} onClick={() => { handleCategorySwitch(''); }} to="/" >Home</SidebarButton>
         <SidebarButton to="/vouchers">Vouchers</SidebarButton>
         </div>

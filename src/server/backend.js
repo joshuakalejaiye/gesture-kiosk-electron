@@ -2,10 +2,12 @@ const express = require("express");
 const pg_app = express();
 const cors = require("cors");
 const pool = require("./db");
+const fileUpload = require('express-fileupload');
 
 //middleware
 pg_app.use(cors());
 pg_app.use(express.json());
+pg_app.use(fileUpload({ safeFileNames: true, preserveExtension: true }))
 
 pg_app.listen(5000, () => {
   console.log("server has started on port 5000")
@@ -56,15 +58,15 @@ pg_app.post("/products", async(req, res) => {
 });
 
 
-pg_app.post("/admin/upload", async(req, res) => {
-   //if context api logged into
-   try {
-     const values = req.body;
-     const addingImage = await pool.query("INSERT INTO product_info (image) VALUES ($1)", 
-     [values.id, values.image]);
-  
-      res.json("Image Added");
-   } catch (error) {
-      console.log(error.message);
-   }
-  });
+pg_app.post("/admin/update", async(req, res) => {
+try {
+   const values = req.body;
+   
+   const addingImage = await pool.query("UPDATE product_info SET image=$1 WHERE product_id=$2;", 
+   [(req.files.uploaded_img.data).toString('base64'), values.id]);
+
+   res.json(req.files.uploaded_img);
+} catch (error) {
+   console.log(error.message);
+}
+});

@@ -7,6 +7,7 @@ import { useToggle } from '../hooks/useToggle';
 import styled from 'styled-components';
 import {useContext} from 'react';
 import KioskContext from "./KioskContext";
+import images from '../images'
 
 const ProductDescription = styled.div.attrs(props => ({
     className: 'interactable'
@@ -36,7 +37,7 @@ display: grid;
 border: none;
 border-radius: 2px;
 background-color: #111;
-min-height: 320px;
+min-height: 340px;
 max-height: 400px;
 
 //fixes a strange clipping issue with the box shadows
@@ -106,15 +107,18 @@ const SingleProduct = ({product}) => {
     useEffect(() => {       
         // const srcImg = '../images/Blue Cheese Dip.jpg';
         //document.getElementById(product.name).innerHTML = '<img src="' + srcImg +'" id="' + product.name +'"/>';
-        
+        console.log();
     },[]);
 
 
     return (
-        <ProductElement onClick={() => setOpen(true)}>
+        <ProductElement onClick={() => {setOpen(true);}}>
 
             <div>
-            <ProductImage id={product.name} src={'assets/images/' + product.name + '.jpg'} alt="Image not found"></ProductImage>
+            <ProductImage 
+            id={product.name} 
+            src={images[product.name]}
+            alt="Image not found"></ProductImage>
             </div>
                 
             <ProductDescription >
@@ -188,7 +192,7 @@ const Selected = ({product, setOpen}) => {
     return (
         <Fragment>
         <div css={  css`border-radius: 15px; background: #212121; width: 90%; display:grid; margin-left: auto; margin-right: auto; margin-bottom:80px; margin-top:80px; text-align: center;`} >
-        <ProductImage css={css`border-radius: 15px; height:400px;  display:block; margin-left: auto; margin-right: auto;`} src={'assets/images/' + product.name + '.jpg'} alt="Image was missing"></ProductImage>
+        <ProductImage css={css`border-radius: 15px; height:400px;  display:block; margin-left: auto; margin-right: auto;`} src={images[product.name]} alt="Image was missing"></ProductImage>
         <span>
             <RemoveButton className="interactable" onClick={  () => { if (count > 1) setCount( count - 1)}}>-</RemoveButton>
             <AddButton className="interactable" onClick={  () => { setCount( count + 1)}}>+</AddButton>

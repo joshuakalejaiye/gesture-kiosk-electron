@@ -143,8 +143,8 @@ const CartItem = ({product}) => {
 
     return (
         <>
-        <ProductElement ref={thisProductRef}>
-            <ProductImage src={'assets/images/' + product.name + '.jpg'} alt=""></ProductImage>
+        <ProductElement ref={thisProductRef}> 
+            <ProductImage src={`${process.env.PUBLIC_URL}/assets/images/logo.png`} alt="Image was missing"></ProductImage>
                 
             <ProductDescription >
             <h4 css={css`font-weight: lighter; top: 0;`}> {product.name} </h4>

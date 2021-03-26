@@ -32,7 +32,7 @@ const HandtrackComponent = () => {
     const handPresentRef = useRef(false);
     const [elementIsInteractable, setElement] = useState(true);
     const cursorFrameIncrement = 1;
-    const cursorMaxSize = 52;
+    const cursorMaxSize = 30;
 
     //called after every element is rendered and can be referred to
     //loads model and begins animating the cursor
@@ -68,7 +68,7 @@ const HandtrackComponent = () => {
            const handPresent = predictions.length > 0;
            handPresentRef.current = handPresent;
 
-           if ( handPresent && predictions[0]["score"] > 0.71)
+           if ( handPresent && predictions[0]["score"] > 0.77)
            {
             //x and y values received from model are transformed to allow the cursor to reach all parts of the program
             //these can be finetuned further and would have to be adjusted for different screen sizes
@@ -77,7 +77,7 @@ const HandtrackComponent = () => {
 
             //get coordinates from the model
             const x = predictions[0]["bbox"][0] * xScalar;
-            const y = (predictions[0]["bbox"][1] * yScalar) - 200;
+            const y = (predictions[0]["bbox"][1] * yScalar) - 400;
 
             //set the cursor to the appropriate positions
             cursorRef.current.style.transform = `translate(${ x }px, ${ y }px)`;
@@ -134,7 +134,7 @@ const HandtrackComponent = () => {
             document.elementFromPoint( 
                 cursorRef.current.getBoundingClientRect().left,
                 cursorRef.current.getBoundingClientRect().top).classList.contains('interactable') 
-            && handPresentRef.current ) 
+             ) //&& handPresentRef.current
         {
             setElement(true);
             cursorRef.current.style.height = String(sizeRef.current) + "px";

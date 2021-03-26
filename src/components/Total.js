@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import styled from 'styled-components';
-import KioskContext from "./KioskContext";
 
 const PageLayout = styled.div`
 display:grid;
@@ -27,13 +26,26 @@ margin-left: auto;
 margin-right: auto;
 `
 
-const content = 'thank_you';
-const Total = () => { 
-    const {context, setContext} = useContext(KioskContext);
+const content = 'total';
+const Total = ({ cartItems }) => { 
+    const [total, setTotal] = useState(null);
+    let sum = 0;
+    
+    for (const item of cartItems)
+    {
+      sum += (Number(item.quantity) * Number(product.price));  
+    }
+
+    setTotal(sum);
 
     return (
       <PageLayout id={content}>
-        <Title>Thank you for your purchase!</Title>
+        <Title>{cartItems.map( item => { 
+            <>
+             <h4 css={css`font-weight: lighter; top:0;`}> {product.name} </h4>
+             <h6 css={css`font-weight: lighter; `}> {"£" + product.price} </h6>
+             <p  css={css`font-size:1.8vh;`}> {product.description} </p></>
+        })}</Title>
       </PageLayout>
       );
 

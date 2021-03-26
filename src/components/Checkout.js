@@ -64,7 +64,19 @@ margin-top: 1.5vh;
 z-index: 3;
 `
 
-const PurchaseButton = styled(Button)`
+const PurchaseButton = styled(Link)`
+border: 0;
+border-radius: 3px;
+width: 32vh;
+height: 9vh;
+color: white;
+font-size: 40px;
+font-weight: bold;
+justify-content:center;
+align-items:center;
+text-align: center;
+margin-top: 1.5vh;
+z-index: 3;
 height: 10vh;
 width: 30vh;
 background-color: #111;
@@ -73,18 +85,25 @@ font-weight: lighter;
 margin-left:auto;
 margin-right:auto;
 z-index: 0;
-`
-
-const SidebarLink = styled(Link).attrs(props => ({
-    className: 'interactable'
-  }))`
-    color: #ffffff;
+color: #ffffff;
+display: block;
+vertical-align: table-cell;
     text-decoration: none;
   
     ${this}:hover {
     color: #ffffff;
     text-decoration: none;
     }
+    & > a {
+         /*Change to middle*/
+}
+
+`
+
+const SidebarLink = styled(Link).attrs(props => ({
+    className: 'interactable'
+  }))`
+    
 `
 
 const content = 'checkout';
@@ -170,7 +189,7 @@ const ProductGrid = () => {
             <Modal toggle={setOpen} open={open} on={false} color={'#212121'}>
                 <Selected product={clickedProduct} setOpen={setOpen}/>
             </Modal>)} */}
-            <PurchaseButton ref={purchaseLinkRef} ><SidebarLink to="/checkout/finish">Purchase Items</SidebarLink></PurchaseButton>
+            <PurchaseButton ref={purchaseLinkRef} to="/checkout/finish">Purchase Items</PurchaseButton>
             </CartGrid>
          
       </PageLayout>

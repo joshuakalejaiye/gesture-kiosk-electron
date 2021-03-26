@@ -2,7 +2,7 @@
   "name": "gesture-kiosk-electron",
   "version": "0.1.0",
   "main": "public/electron.js",
-  "homepage": "./",
+  "homepage": ".",
   "private": true,
   "author": "Adedayo Kalejaiye",
   "description": "hey there :)",
@@ -28,6 +28,7 @@
     "history": "^5.0.0",
     "import": "^0.0.6",
     "js-cookie": "2.2.0",
+    "multer": "^1.4.2",
     "pg": "^8.5.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
@@ -35,6 +36,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "react-webcam": "^5.2.0",
+    "serve": "^11.3.2",
     "styled-components": "^5.2.1",
     "url-loader": "^4.1.1",
     "web-vitals": "^1.0.1"
@@ -80,7 +82,7 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "icon": "src/icons/mac/icon.icns",
+        "icon": "src/images/logo.ico",
         "name": "G-Kiosk",
         "asar": true
       },

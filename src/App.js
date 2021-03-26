@@ -43,6 +43,7 @@ align-items: center;
 
 function App() {
   const [category, setCategory] = useState('');
+  const history = useHistory();
 
  const [context, setContext] = useState({
   "content" : "all_products",
@@ -52,14 +53,7 @@ function App() {
   "admin_email" : "",
   "orientation" : "landscape",
   "cartItems" : [
-          {
-              "product_id" : "6",
-              "quantity" : "1"
-          },
-          {
-              "product_id" : "9",
-              "quantity" : "2"
-  }]  
+         ]  
 });
 
   useEffect( () => { 
@@ -68,6 +62,7 @@ function App() {
     //after the component renders this unfocuses the active element
     //it only runs when the program is started
     document.activeElement.blur();
+    history.push('/');
   }, [])
 
   return (
