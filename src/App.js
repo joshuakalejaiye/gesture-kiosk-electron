@@ -14,6 +14,7 @@ import { useHistory } from "react-router-dom";
 import { Route } from "react-router-dom";
 import KioskContext from './components/KioskContext';
 import ThankYou from './components/ThankYou';
+import Total from './components/Total';
 
 const NotInSidebar = styled.section`
 margin-left: 160px; /* Same as the width of the sidebar */
@@ -95,6 +96,9 @@ function App() {
          </Route>
          <Route path='/checkout/finish'>
             <ThankYou/>
+         </Route>
+         <Route path='/checkout/confirm'>
+            <Total></Total>
          </Route>
         </section>
       </NotInSidebar>

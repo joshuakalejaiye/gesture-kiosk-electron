@@ -1,5 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import styled from 'styled-components';
+import React, { useEffect, useState } from "react";
+import { jsx, css } from '@emotion/react';
+import CartItem from "./CartItem";
+import SummaryItem from './SummaryItem';
 
 const PageLayout = styled.div`
 display:grid;
@@ -15,7 +19,7 @@ border:none;
 box-shadow: none;
 `
 
-const Title = styled.h2`
+const Title = styled.h3`
 font-weight: lighter;
 text-align:center;
 margin-top: 1rem;
@@ -26,29 +30,38 @@ margin-left: auto;
 margin-right: auto;
 `
 
+const Subtitle = styled(Title)`
+font-size: 3rem;
+margin-top: 0;
+`
+
 const content = 'total';
-const Total = ({ cartItems }) => { 
+const Total = ({cartItems}) => { 
     const [total, setTotal] = useState(null);
     let sum = 0;
     
-    for (const item of cartItems)
-    {
-      sum += (Number(item.quantity) * Number(product.price));  
-    }
+    
 
-    setTotal(sum);
+    useEffect(() => { 
+      for (const item of cartItems)
+      {
+        var cost = (Number(item.quantity) * Number(item.price)); 
+        sum += cost;  
+        item["total"] = cost;
+      }
+    }, [cartItems])
+
+    useEffect(() => { 
+      setTotal(sum);
+      console.log(cartItems);
+    }, [])
 
     return (
       <PageLayout id={content}>
-        <Title>{cartItems.map( item => { 
-            <>
-             <h4 css={css`font-weight: lighter; top:0;`}> {product.name} </h4>
-             <h6 css={css`font-weight: lighter; `}> {"£" + product.price} </h6>
-             <p  css={css`font-size:1.8vh;`}> {product.description} </p></>
-        })}</Title>
+        <Subtitle>Pay £{ total } ? </Subtitle>
+        
       </PageLayout>
       );
-
 };
 
 export default Total;

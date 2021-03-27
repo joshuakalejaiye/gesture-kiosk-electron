@@ -34,7 +34,7 @@ const ProductGrid = (props) => {
                 const jsonData = await response.json();
     
                 //console.log(jsonData);
-                setProducts(jsonData);
+                setProducts(sortProducts(jsonData, "category"));
             } catch (error) {
                 console.log(error.message);
             }
@@ -45,12 +45,23 @@ const ProductGrid = (props) => {
         //this prevents a memory leak in the event that the user changes categories before all products are received
         return () => (receivedProducts = false)
     },[props])
+
+    function sortProducts(array, key) {
+        return array.sort(function(b, a) {
+            var x = a[key]; var y = b[key];
+            return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+        });
+    }
     
     useEffect ( () => {
     const newContext = context;
     newContext.content = content;
     setContext(newContext);
     }, [])
+
+    useEffect( () => {
+        //products[0] && console.log(products[0]["category"]);
+    }, [products]);
 
     return (
       <AllProducts id={content}>

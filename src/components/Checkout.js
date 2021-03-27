@@ -8,6 +8,7 @@ import KioskContext from "./KioskContext";
 import CartItem from "./CartItem";
 import { Modal } from './Modal';
 import { Link } from "react-router-dom";
+import Total from './Total';
 
 const PageLayout = styled.div`
 display:grid;
@@ -106,6 +107,15 @@ const SidebarLink = styled(Link).attrs(props => ({
     
 `
 
+const CheckoutButton  = styled(PurchaseButton)`
+margin-top: -55vh;
+`
+
+const ReturnButton  = styled(PurchaseButton)`
+margin-top: -42vh;
+height:100px;
+`
+
 const content = 'checkout';
 const ProductGrid = () => {    
     const {context, setContext} = useContext(KioskContext);
@@ -117,7 +127,8 @@ const ProductGrid = () => {
     const purchaseLinkRef = useRef(false);
     const cartEmptyMessage = 'Your cart is empty';
     const [subtitleVal, setSubtitleVal] = useState('');
-
+    const [finishingTransaction, setTransaction] = useState(false);
+    const titleRef = useRef(false);
 
    useEffect(() => {
     const newContext = context;
@@ -172,13 +183,18 @@ const ProductGrid = () => {
         }
     }
 
-    // useEffect( HandleCartSize, [cartGridRef.current && cartGridRef.current.getElementsByTagName('div').length]);
+    const emptyCart = () => { 
+        const newContext = context;
+        newContext.cartItems =  [];
+        setContext(newContext);
+    }
 
+    // useEffect( HandleCartSize, [cartGridRef.current && cartGridRef.current.getElementsByTagName('div').length]);
     return (
         <>
       <PageLayout id={content}>
-          <Title>Checkout</Title>
-            <Subtitle ref={subtitleRef}> { subtitleVal }</Subtitle>
+          <Title ref={titleRef}>Checkout</Title>
+            { !finishingTransaction && <><Subtitle ref={subtitleRef}> { subtitleVal }</Subtitle>
             <CartGrid ref={cartGridRef}>
             {products.map(product => (
                     <>
@@ -189,9 +205,15 @@ const ProductGrid = () => {
             <Modal toggle={setOpen} open={open} on={false} color={'#212121'}>
                 <Selected product={clickedProduct} setOpen={setOpen}/>
             </Modal>)} */}
-            <PurchaseButton ref={purchaseLinkRef} to="/checkout/finish">Purchase Items</PurchaseButton>
+            <PurchaseButton className="interactable" ref={purchaseLinkRef} onClick={() => { setTransaction(true);}}>Purchase Items</PurchaseButton>
             </CartGrid>
-         
+            </>}
+            { finishingTransaction && <>
+                <Total cartItems={products}></Total>
+                <CheckoutButton className="interactable" onClick={emptyCart} to="/checkout/finish">Pay</CheckoutButton>
+                <ReturnButton className="interactable" onClick={() => { setTransaction(false);}}>Return to Cart</ReturnButton>
+            </>
+            }
       </PageLayout>
       </>
       );

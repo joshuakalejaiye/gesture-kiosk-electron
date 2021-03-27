@@ -7,7 +7,7 @@ import { useToggle } from '../hooks/useToggle';
 import styled from 'styled-components';
 import {useContext} from 'react';
 import KioskContext from "./KioskContext";
-import images from '../images'
+import images from '../images';
 
 const ProductDescription = styled.div.attrs(props => ({
     className: 'interactable'

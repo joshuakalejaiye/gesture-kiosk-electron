@@ -2,7 +2,7 @@
   "name": "gesture-kiosk-electron",
   "version": "0.1.0",
   "main": "public/electron.js",
-  "homepage": ".",
+  "homepage": "./",
   "private": true,
   "author": "Adedayo Kalejaiye",
   "description": "hey there :)",

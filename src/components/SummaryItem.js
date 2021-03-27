@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import KioskContext from "./KioskContext";
 import images from '../images';
 
-const ProductElement = styled.div.attrs(props => ({
+const ProductElement = styled.span.attrs(props => ({
     // className: 'interactable'
   }))`
 display: grid;
@@ -16,7 +16,7 @@ border: none;
 margin-bottom: 30px;
 border-radius: 2px;
 background-color: #111;
-height: 200px;
+height: 50px;
 margin-left: 20vh;
 z-index: 2;
 margin-right: 20vh;
@@ -54,7 +54,7 @@ border-radius: 2px;
 overflow: hidden;
 object-fit: cover;
 width:100%;
-height:200px;
+height:80%;
 `
 
 const ModalButton = styled.button.attrs(props => ({
@@ -87,7 +87,7 @@ const RemoveButton = styled(ModalButton)`
 `   
 
 
-const CartItem = ({product}) => {
+const SummaryItem = ({product}) => {
     const removeButtonRef = useRef(null);
     const {context, setContext} = useContext(KioskContext);
     const newContext = context;
@@ -98,67 +98,18 @@ const CartItem = ({product}) => {
         setQuantity(product.quantity);
     }, [])
 
-    const ChangeQuantity = (amount_to_change_by) => { 
-
-        var positionInCart = 0;
-        var isInCart = false;
-
-        //find this product in the context cart
-        for (var i = 0; i < context.cartItems.length; i++) {
-            if (String(context.cartItems[i].product_id) === String(product.product_id))
-            {   
-                isInCart = true;
-                positionInCart = i;
-                break;
-            }
-        }
-
-        //make an exact copy
-        const newContext = context;
-
-        // if the requested change would reduce the quantity of an item in the cart below 1
-        if ( (Number(context.cartItems[i].quantity) + Number(amount_to_change_by)) < 1 )
-        {
-            //remove it from the context cart 
-            newContext.cartItems.splice(positionInCart, 1);
-
-            //delete the element from the dom 
-            console.log(thisProductRef.current);
-            thisProductRef.current.remove();
-
-            //update the value 
-            product.quantity = String(Number(product.quantity) - 1);
-        }
-        else
-        {
-            //effect the change
-            newContext.cartItems[positionInCart].quantity = String(Number(newContext.cartItems[positionInCart].quantity) + (amount_to_change_by))
-            setQuantity(newContext.cartItems[positionInCart].quantity);
-        }
-        
-        //change to original to the copy
-        setContext(newContext);
-        console.log(context);
-
-    }
-
     return (
         <>
         <ProductElement ref={thisProductRef}> 
             <ProductImage src={images[product.name]} alt="Image was missing"></ProductImage>
-                
             <ProductDescription >
             <h4 css={css`font-weight: lighter; top: 0;`}> {product.name} </h4>
             <h6 css={css`font-weight: lighter; `}> {"£" + product.price} </h6>
             <p  css={css`font-size:2vh;`}> Quantity: {quantity} </p>
-            <RemoveButton onClick={() => { ChangeQuantity(-1); }}>-</RemoveButton> 
-            <AddButton onClick={() => { ChangeQuantity(1); }}>+</AddButton>
             </ProductDescription>
-
-               
          </ProductElement>
-         </>
+        </>
     );
 } 
 
-export default CartItem;
+export default SummaryItem;

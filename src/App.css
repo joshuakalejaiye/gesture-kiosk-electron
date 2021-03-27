@@ -110,3 +110,8 @@ color: whitesmoke;
 .hover {
   box-shadow: 0 0 0 1pt #67daff;
 }
+
+::-webkit-scrollbar-track-piece {
+  background: grey;
+  color: grey;
+}
