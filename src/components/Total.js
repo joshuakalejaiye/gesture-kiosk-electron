@@ -40,8 +40,6 @@ const Total = ({cartItems}) => {
     const [total, setTotal] = useState(null);
     let sum = 0;
     
-    
-
     useEffect(() => { 
       for (const item of cartItems)
       {
@@ -49,6 +47,8 @@ const Total = ({cartItems}) => {
         sum += cost;  
         item["total"] = cost;
       }
+
+      setTotal(sum);
     }, [cartItems])
 
     useEffect(() => { 

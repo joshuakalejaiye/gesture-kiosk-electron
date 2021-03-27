@@ -67,6 +67,7 @@ ${this}:hover {
   background-color: #0277bd;
   text-decoration: none;
   color: #ffffff;
+  border: none;
 }
 
 ${this}:focus {

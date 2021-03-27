@@ -157,16 +157,25 @@ const ProductGrid = () => {
     document.addEventListener("click", () => { 
         HandleCartSize();
     } );
+
+    if ( !finishingTransaction && purchaseLinkRef.current && 
+        purchaseLinkRef.current.classList.contains("invisible"))
+       {
+        purchaseLinkRef.current.classList.remove("invisible");
+        HandleCartSize();
+       }
+
     },[])
     
 
     const HandleCartSize = () => {
         if (cartGridRef.current && purchaseLinkRef.current && 
-            cartGridRef.current.getElementsByTagName('div').length < 2)
+            cartGridRef.current.getElementsByTagName('div').length < 2 &&
+           !finishingTransaction)
+            
         {
             setSubtitleVal(cartGridRef.current.getElementsByTagName('div').length < 2 ? cartEmptyMessage : '');
             purchaseLinkRef.current.classList.add("invisible");
-            
             subtitleRef.current.style.fontSize= "large";
         }            
 
