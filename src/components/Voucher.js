@@ -4,6 +4,7 @@ import { jsx, css } from '@emotion/react'
 import KioskContext from "./KioskContext";
 import {useContext, useRef, useEffect} from 'react';
 import styled from 'styled-components';
+import qr_code from '../images/qr.png';
 
 const PageLayout = styled.div`
 display:grid;
@@ -31,10 +32,32 @@ font-size: 1rem;
 margin-top: 0;
 `
 
+const SubmitButton = styled.input.attrs(props => ({
+    className: 'interactable'
+  }))` 
+border: 0;
+border-radius: 3px;
+width: 32vh;
+height: 12vh;
+color: white;
+font-size: 20px;
+font-weight: bold;
+justify-content:center;
+align-items:center;
+text-align: center;
+margin-top: 1.5vh;
+background-color: #111;
+border:none;
+
+${this}:focus { 
+    border: none;
+
+}
+` 
+
 const content = 'vouchers';
 const VoucherComponent = () => {
     const {context, setContext} = useContext(KioskContext);
-    const voucherCodeRef = useRef(null);
 
     useEffect( () => { 
         const newContext = context;
@@ -47,9 +70,11 @@ const VoucherComponent = () => {
 
         <PageLayout id={content}>
             <Title>Claim a Voucher!</Title>
-            <Subtitle>Enter your code below</Subtitle>
-            <input style={{ display:'block', width:'40%', height:'50%', marginTop:'0', marginBottom:'0', marginRight:'auto', marginLeft:'auto'}} type="text" ref={voucherCodeRef} name="code" placeholder="e.g. 208XHS3UJU"></input>
-                <input onClick={() => { voucherCodeRef.current.value = ""; console.log(voucherCodeRef.current);}} style={{ display:'block', width:'40%', height:'40%', marginTop:'0', marginBottom:'0', marginRight:'auto', marginLeft:'auto'}} type="submit"></input>
+            <Subtitle>Scan your code on the kiosk</Subtitle>
+            <br></br>
+            <img src={qr_code} css={css` display:'inline-block'; margin-left:auto; margin-right:auto; height: 300px; width: 300px;`}/>
+            <br></br>
+            <SubmitButton type="submit" css={css` width: 32vh; height: 12vh; margin-left:auto; margin-right:auto; `}></SubmitButton>
                 <br></br>
                 <br></br>
                 <br></br>

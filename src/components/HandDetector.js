@@ -33,6 +33,9 @@ const HandtrackComponent = () => {
     const [elementIsInteractable, setElement] = useState(true);
     const cursorFrameIncrement = 1;
     const cursorMaxSize = 30;
+    var t0 = null;
+    var t1 = null;
+    const timeoutValue = 200;
 
     //called after every element is rendered and can be referred to
     //loads model and begins animating the cursor
@@ -81,7 +84,15 @@ const HandtrackComponent = () => {
 
             //set the cursor to the appropriate positions
             cursorRef.current.style.transform = `translate(${ x }px, ${ y }px)`;
-           }   
+           }  
+           else
+           {
+             t1 = performance.now()
+             if ((t1 - t0) > timeoutValue) {
+                cursorRef.current.style.transform = `translate(${ 1280 }px, ${ 720 }px)`;
+                t0 = t1;
+             }
+           }
         
            //begins the detection loop, moving the cursor based on the position of the hand
            requestAnimationFrame(runDetection);
@@ -163,9 +174,10 @@ const HandtrackComponent = () => {
             sizeRef.current = initialCursorSize;
         });
 
+        t0 = performance.now()
         AfterRender();
+
         setInterval(DwellControls, 50);
-        
     }, []);
 
     useEffect( () => {

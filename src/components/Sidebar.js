@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { Link } from "react-router-dom";
 import KioskContext from './KioskContext';
 import {useContext, useEffect, useState} from 'react';
+import logo from '../images/logo.png';
 
 const Logo = styled.img`
 height: 60px;
@@ -128,7 +129,7 @@ const Sidebar = (props) => {
       <SidebarContainer>
         <SidebarStyle>
         <div css={css`grid-row-gap: 0.4vh; grid-row-start: 1;  grid-row-end:2;  `}>
-        <Logo src={`${process.env.PUBLIC_URL}/assets/images/logo.png`}></Logo>
+        <Logo src={logo}></Logo>
         <SidebarButton id={categories[0]} onClick={() => { handleCategorySwitch(''); }} to="/" >Home</SidebarButton>
         <SidebarButton to="/vouchers">Vouchers</SidebarButton>
         </div>

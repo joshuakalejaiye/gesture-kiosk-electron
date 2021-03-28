@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import {useContext} from 'react';
 import KioskContext from "./KioskContext";
 import images from '../images';
-
+  
 const ProductDescription = styled.div.attrs(props => ({
     className: 'interactable'
   }))`
@@ -60,7 +60,7 @@ const ModalButton = styled.button.attrs(props => ({
 border: 0;
 border-radius: 3px;
 width: 32vh;
-height: 9vh;
+height: 12vh;
 color: white;
 font-size: 40px;
 font-weight: bold;

@@ -64,7 +64,7 @@ function App() {
     //it only runs when the program is started
     document.activeElement.blur();
     history.push('/');
-  }, [])
+  }, [history])
 
   return (
     <KioskContext.Provider value={{context, setContext}}>

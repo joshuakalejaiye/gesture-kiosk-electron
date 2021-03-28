@@ -8,9 +8,9 @@ import KioskContext from "./KioskContext";
 const AllProducts = styled.div`
 display:grid;
 grid-template-columns: 1fr 1fr 1fr;
-grid-row-gap: 1vh;
+grid-row-gap: 4vh;
 padding: 15px;
-grid-column-gap: 1vh;
+grid-column-gap: 3vh;
 overflow-y: auto;
 scroll-behavior: smooth;
 height: 76vh;
