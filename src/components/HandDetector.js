@@ -68,7 +68,7 @@ const HandtrackComponent = () => {
            const handPresent = predictions.length > 0;
            handPresentRef.current = handPresent;
 
-           if ( handPresent && predictions[0]["score"] > 0.77)
+           if ( handPresent && predictions[0]["score"] > 0.90)
            {
             //x and y values received from model are transformed to allow the cursor to reach all parts of the program
             //these can be finetuned further and would have to be adjusted for different screen sizes
@@ -76,7 +76,7 @@ const HandtrackComponent = () => {
             const yScalar = 2.7;
 
             //get coordinates from the model
-            const x = predictions[0]["bbox"][0] * xScalar - 100;
+            const x = predictions[0]["bbox"][0] * xScalar - 400;
             const y = (predictions[0]["bbox"][1] * yScalar) - 400;
 
             //set the cursor to the appropriate positions
