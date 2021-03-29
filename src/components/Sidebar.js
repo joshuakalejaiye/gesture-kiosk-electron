@@ -15,10 +15,10 @@ margin-bottom: 1vh;
 margin-top: 3vh;
 `
 
-var sidebar_width = '180px';
+var sidebar_width = '160px';
 const SidebarStyle = styled.div`
   margin-top: 35px;
-  width: 160px; 
+  width: ${sidebar_width}; 
   position: fixed; 
   z-index: 2; 
   top: 0;
@@ -53,7 +53,7 @@ margin-bottom: auto;
 margin-left: auto;
 margin-right: auto;
 
-height: 8vh;
+height: 9vh;
 width: ${sidebar_width};
 background-color: ${buttonColor};
 

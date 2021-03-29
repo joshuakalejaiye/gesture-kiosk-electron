@@ -4,14 +4,21 @@ import { jsx, css } from '@emotion/react'
 import {useContext} from 'react';
 import KioskContext from './KioskContext';
 
+const footerWidth = '6rem';
+
 const Footer = styled.footer.attrs(props => ({
     className: 'interactable'
   }))` 
+min-height:100%;
+width: ${footerWidth};
 position: absolute;
+z-index: 1;
+top:0;
+right:0;
 background-color: #0e0e0e;
+overflow-x:hidden;
+padding-top:20px;
 bottom: 0;
-min-width: 100%;
-height: 4rem;
 margin-left: auto;
 margin-right: auto;
 box-sizing: border-box;
@@ -35,8 +42,8 @@ const FooterButton = styled.button.attrs(props => ({
   border-color: #111;
   font-size: 2.8vh;
   background-color: #0e0e0e;
-  height: 4rem;
-  width: 50%;
+  height: 50%;
+  width: ${footerWidth};
 `
 
 
@@ -66,14 +73,13 @@ const FooterComponent = () => {
 
         <FooterButton className="interactable" onClick={() => { 
                 if (document.getElementById(context.content)) 
-                    document.getElementById(context.content).scrollBy(0, -250);}}>
+                    document.getElementById(context.content).scrollBy(0, -345);}}>
             &#129153;
         </FooterButton>
-        
         <FooterButton className="interactable" 
         onClick={() => { 
             if (document.getElementById(context.content)) 
-                document.getElementById(context.content).scrollBy(0, 250);}}>
+                document.getElementById(context.content).scrollBy(0, 345);}}>
             &#129155;
         </FooterButton>
         </Footer>

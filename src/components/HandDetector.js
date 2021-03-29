@@ -4,9 +4,9 @@ import * as handTrack from 'handtrackjs';
 const modelParams = {
     flipHorizontal: true,   // flip e.g for video 
     imageScaleFactor: 0.7,  // reduce input image size for gains in speed.
-    maxNumBoxes: 20,        // maximum number of boxes to detect
+    maxNumBoxes: 1,        // maximum number of boxes to detect
     iouThreshold: 0.5,      // ioU threshold for non-max suppression
-    scoreThreshold: 0.79,    // confidence threshold for predictions.
+    scoreThreshold: 0.77,    // confidence threshold for predictions.
 }
 
 const HandtrackComponent = () => {   
@@ -31,11 +31,11 @@ const HandtrackComponent = () => {
     const sizeRef = useRef(initialCursorSize);
     const handPresentRef = useRef(false);
     const [elementIsInteractable, setElement] = useState(true);
-    const cursorFrameIncrement = 1;
-    const cursorMaxSize = 30;
+    const cursorFrameIncrement = 2;
+    const cursorMaxSize = 50;
     var t0 = null;
     var t1 = null;
-    const timeoutValue = 200;
+    const timeoutValue = 2000;
 
     //called after every element is rendered and can be referred to
     //loads model and begins animating the cursor
@@ -71,12 +71,12 @@ const HandtrackComponent = () => {
            const handPresent = predictions.length > 0;
            handPresentRef.current = handPresent;
 
-           if ( handPresent && predictions[0]["score"] > 0.90)
+           if ( handPresent )
            {
             //x and y values received from model are transformed to allow the cursor to reach all parts of the program
             //these can be finetuned further and would have to be adjusted for different screen sizes
-            const xScalar = 3.5;
-            const yScalar = 2.7;
+            const xScalar = 4.5;
+            const yScalar = 3;
 
             //get coordinates from the model
             const x = predictions[0]["bbox"][0] * xScalar - 400;
@@ -102,7 +102,7 @@ const HandtrackComponent = () => {
     const ClickElementAtPosition = (x,y) => {
         
         try {
-            var cursorClicked = new MouseEvent('click', {
+            var cursorClicked = new MouseEvent('click', { 
                 'view': window,
                 'bubbles': true,
                 'cancelable': true,
@@ -198,9 +198,9 @@ const HandtrackComponent = () => {
             <div id="cursor" 
             style={{
                 zIndex: '1000',
-                height: '12px',
-                width: '12px',
-                border: '2px solid #67daff',
+                height: '6px',
+                width: '5px',
+                border: '12px solid #67daff',
                 borderRadius: '50%',
                 position: 'absolute',
                 pointerEvents: 'none',
@@ -214,7 +214,7 @@ const HandtrackComponent = () => {
                 zIndex: '999',
                 height: 100,
                 width: 100,
-                marginBottom: '3.2rem',
+                marginBottom: '1.4rem',
                 marginLeft: '1.8rem',
                 bottom: 0,
                 left: 0,

@@ -88,7 +88,7 @@ const AddToCartButton = styled(ModalButton)`
     height: 15vh;
     width: 69vh;
     background-color: #111;
-    font-size: 20px;
+    font-size: 25px;
     font-weight: lighter;
 `
 

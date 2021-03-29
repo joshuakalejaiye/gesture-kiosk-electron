@@ -88,15 +88,13 @@ const RemoveButton = styled(ModalButton)`
 
 
 const CartItem = ({product}) => {
-    const removeButtonRef = useRef(null);
     const {context, setContext} = useContext(KioskContext);
-    const newContext = context;
     const [quantity, setQuantity] = useState(product.quantity);
     const thisProductRef = useRef(null);
 
     useEffect( () => {
         setQuantity(product.quantity);
-    }, [])
+    }, [context])
 
     const ChangeQuantity = (amount_to_change_by) => { 
 
@@ -128,6 +126,7 @@ const CartItem = ({product}) => {
 
             //update the value 
             product.quantity = String(Number(product.quantity) - 1);
+            setQuantity(product.quantity);
         }
         else
         {

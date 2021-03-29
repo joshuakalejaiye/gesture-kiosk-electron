@@ -171,9 +171,8 @@ const ProductGrid = () => {
     const HandleCartSize = () => {
         if (cartGridRef.current && purchaseLinkRef.current && 
             cartGridRef.current.getElementsByTagName('div').length < 2 &&
-           !finishingTransaction)
-            
-        {
+           !finishingTransaction) {
+
             setSubtitleVal(cartGridRef.current.getElementsByTagName('div').length < 2 ? cartEmptyMessage : '');
             purchaseLinkRef.current.classList.add("invisible");
             subtitleRef.current.style.fontSize= "large";
@@ -220,7 +219,7 @@ const ProductGrid = () => {
             { finishingTransaction && <>
                 <Total cartItems={products}></Total>
                 <CheckoutButton className="interactable" onClick={emptyCart} to="/checkout/finish">Pay</CheckoutButton>
-                <ReturnButton className="interactable" onClick={() => { setTransaction(false);}}>Return to Cart</ReturnButton>
+                <ReturnButton className="interactable" to="/checkout/" onClick={() => { setTransaction(false);}}>Return to Cart</ReturnButton>
             </>
             }
       </PageLayout>

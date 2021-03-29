@@ -17,7 +17,7 @@ import ThankYou from './components/ThankYou';
 import Total from './components/Total';
 
 const NotInSidebar = styled.section`
-margin-left: 160px; /* Same as the width of the sidebar */
+margin-left: 140px; /* Same as the width of the sidebar */
 padding: 0px 10px; /* a little bit away from sidebar */
 padding-bottom: 2.5rem;  /* Footer height */
 min-height: 100vh; /* as high as 100% of the page */

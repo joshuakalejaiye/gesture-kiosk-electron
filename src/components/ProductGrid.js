@@ -7,13 +7,14 @@ import KioskContext from "./KioskContext";
 
 const AllProducts = styled.div`
 display:grid;
-grid-template-columns: 1fr 1fr 1fr;
+grid-template-columns: 1fr 1fr;
 grid-row-gap: 4vh;
-padding: 15px;
 grid-column-gap: 3vh;
-overflow-y: auto;
+overflow-y: hidden;
 scroll-behavior: smooth;
-height: 76vh;
+height: 86vh;
+padding: 1rem;
+margin-right: 6rem;
 position:relative;
 border:none;
 box-shadow: none;
