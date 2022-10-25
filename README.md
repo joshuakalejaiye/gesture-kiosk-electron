@@ -1,4 +1,4 @@
-# gesture-kiosk-electron
+### Gesture Controlled Self-Service Kiosk (gesture-kiosk-electron)
 
 Application that allows users to buy goods using their hand and a webcam as a controller. Read more about this undergraduate final year project here: 
 
